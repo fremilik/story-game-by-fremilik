@@ -1,0 +1,59 @@
+[gd_scene load_steps=8 format=3 uid="uid://d2f7ytaacfkvc"]
+
+[ext_resource type="PackedScene" uid="uid://lx33v3qg02xp" path="res://Scene/objects/moving_plat.tscn" id="1_1axde"]
+[ext_resource type="Script" uid="uid://de027ngqraqrw" path="res://Script/map_4.gd" id="1_4i637"]
+[ext_resource type="PackedScene" uid="uid://cuxkkmf3rymqs" path="res://Scene/Map4.tscn" id="1_gaom2"]
+[ext_resource type="PackedScene" uid="uid://cql2gtys41xr7" path="res://Scene/objects/spawner.tscn" id="2_1axde"]
+[ext_resource type="PackedScene" uid="uid://ccl1d2pa8800t" path="res://Scene/objects/orb.tscn" id="3_nariw"]
+[ext_resource type="PackedScene" uid="uid://c1xieuxtex6sx" path="res://Scene/objects/bomb_spawner.tscn" id="4_1qtmk"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4i637"]
+size = Vector2(118, 98)
+
+[node name="Map4" type="Node2D"]
+script = ExtResource("1_4i637")
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="MovingPlat" parent="Objects" instance=ExtResource("1_1axde")]
+position = Vector2(1904, -272)
+tileDistance = 17
+duration = 10.63
+platSize = 7
+
+[node name="MovingPlat2" parent="Objects" instance=ExtResource("1_1axde")]
+position = Vector2(3376, -304)
+tileDistance = 20
+direction = Vector2i(-1, 0)
+duration = 12.5
+platSize = 7
+
+[node name="Orb" parent="Objects" instance=ExtResource("3_nariw")]
+position = Vector2(6192, -496)
+tileDistance = 6
+duration = 60.0
+
+[node name="Map4" parent="." instance=ExtResource("1_gaom2")]
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(6001.09, -339.615)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(82.9058, 2.61469)
+shape = SubResource("RectangleShape2D_4i637")
+
+[node name="Spawner" parent="." instance=ExtResource("2_1axde")]
+EnemyType = "mushroom"
+SpawnPositions = Array[Vector2]([Vector2(5880, -790), Vector2(6500, -790)])
+amount = 75
+
+[node name="BombSpawner" parent="." instance=ExtResource("4_1qtmk")]
+spawnPositions = Array[Vector2]([Vector2(1430, -730), Vector2(1750, -730), Vector2(2110, -730), Vector2(2430, -730), Vector2(2780, -730), Vector2(3200, -730), Vector2(3520, -730), Vector2(3800, -730), Vector2(4030, -730), Vector2(4320, -730)])
+autoStart = true
+frequency = 0.85
+
+[node name="BombSpawner2" parent="." instance=ExtResource("4_1qtmk")]
+spawnPositions = Array[Vector2]([Vector2(6000, -750), Vector2(6100, -750), Vector2(6190, -750), Vector2(6290, -750), Vector2(6385, -750)])
+frequency = 1.7

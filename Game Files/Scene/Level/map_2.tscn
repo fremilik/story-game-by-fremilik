@@ -1,0 +1,71 @@
+[gd_scene load_steps=6 format=3 uid="uid://csnevss14d714"]
+
+[ext_resource type="PackedScene" uid="uid://t6qlrhve7wpw" path="res://Scene/Map2.tscn" id="1_fjq8m"]
+[ext_resource type="Script" uid="uid://dfyw1fgx4f8gd" path="res://Script/map_2.gd" id="1_j4god"]
+[ext_resource type="PackedScene" uid="uid://lx33v3qg02xp" path="res://Scene/objects/moving_plat.tscn" id="2_7jfa6"]
+[ext_resource type="PackedScene" uid="uid://cql2gtys41xr7" path="res://Scene/objects/spawner.tscn" id="4_v4pui"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j4god"]
+size = Vector2(100, 150)
+
+[node name="Map2" type="Node2D"]
+script = ExtResource("1_j4god")
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="Map2" parent="." instance=ExtResource("1_fjq8m")]
+
+[node name="MovingPlat" parent="." instance=ExtResource("2_7jfa6")]
+position = Vector2(624, 240)
+tileDistance = 7
+direction = Vector2i(0, -1)
+duration = 2.8
+platSize = 3
+
+[node name="MovingPlat2" parent="." instance=ExtResource("2_7jfa6")]
+position = Vector2(1360, 240)
+tileDistance = 7
+direction = Vector2i(0, -1)
+duration = 2.8
+platSize = 3
+
+[node name="MovingPlat3" parent="." instance=ExtResource("2_7jfa6")]
+position = Vector2(1520, 240)
+tileDistance = 10
+duration = 3.57
+platSize = 3
+
+[node name="MovingPlat4" parent="." instance=ExtResource("2_7jfa6")]
+position = Vector2(2416, 240)
+tileDistance = 9
+direction = Vector2i(0, -1)
+duration = 3.0
+platSize = 3
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(825.1, -38.5)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(60.9, -38.5)
+shape = SubResource("RectangleShape2D_j4god")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(5051.45, 793.539)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(37.5499, -38.5389)
+shape = SubResource("RectangleShape2D_j4god")
+
+[node name="Spawner" parent="." instance=ExtResource("4_v4pui")]
+EnemyType = "goblin"
+SpawnPositions = Array[Vector2]([Vector2(990, -450), Vector2(1180, -450)])
+amount = 15
+
+[node name="Spawner2" parent="." instance=ExtResource("4_v4pui")]
+EnemyType = "goblin"
+SpawnPositions = Array[Vector2]([Vector2(4930, 260), Vector2(5600, 260)])
+amount = 65

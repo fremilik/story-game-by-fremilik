@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://b3r031ftwcghe"]
+
+[ext_resource type="Texture2D" uid="uid://dxh2nywx6k4wc" path="res://Assets/road_block.png" id="1_oe0xr"]
+[ext_resource type="Script" uid="uid://dlw7xrccpcb50" path="res://Scene/objects/road_block.gd" id="1_uk7qh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8ddja"]
+size = Vector2(32, 64)
+
+[node name="RoadBlock" type="StaticBody2D"]
+script = ExtResource("1_uk7qh")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(0, -16)
+texture = ExtResource("1_oe0xr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -16)
+shape = SubResource("RectangleShape2D_8ddja")

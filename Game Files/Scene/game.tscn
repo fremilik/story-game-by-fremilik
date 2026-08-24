@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=3 uid="uid://c4mn80gnlou7m"]
+
+[ext_resource type="PackedScene" uid="uid://b3r031ftwcghe" path="res://Scene/objects/road_block.tscn" id="1_4jv7b"]
+[ext_resource type="PackedScene" uid="uid://cqqoplb4oiurc" path="res://Scene/player.tscn" id="2_03iqk"]
+[ext_resource type="PackedScene" uid="uid://cuxkkmf3rymqs" path="res://Scene/Map4.tscn" id="2_ihreq"]
+[ext_resource type="PackedScene" uid="uid://cql2gtys41xr7" path="res://Scene/objects/spawner.tscn" id="3_ihreq"]
+
+[node name="Game" type="Node2D"]
+
+[node name="RoadBlock" parent="." instance=ExtResource("1_4jv7b")]
+position = Vector2(5775, -432)
+
+[node name="Map4" parent="." instance=ExtResource("2_ihreq")]
+
+[node name="Player" parent="." instance=ExtResource("2_03iqk")]
+position = Vector2(6141.49, -446.913)
+
+[node name="Spawner" parent="." instance=ExtResource("3_ihreq")]
+SpawnPositions = Array[Vector2]([Vector2(5890, -680), Vector2(6500, -680)])

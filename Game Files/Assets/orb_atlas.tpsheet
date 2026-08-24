@@ -1,0 +1,63 @@
+{
+	"textures": [
+		{
+			"image": "orb_atlas.png",
+			"size": {
+				"w": 144,
+				"h": 48
+			},
+			"sprites": [
+				{
+					"filename": "item_210.png",
+					"region": {
+						"x": 0,
+						"y": 0,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "item_211.png",
+					"region": {
+						"x": 48,
+						"y": 0,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "item_212.png",
+					"region": {
+						"x": 96,
+						"y": 0,
+						"w": 48,
+						"h": 48
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7",
+		"format": "RGBA8888",
+	}
+}
