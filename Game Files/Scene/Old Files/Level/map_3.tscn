@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://cv5b5j0sk7c3n"]
+
+[ext_resource type="Script" uid="uid://bempaehc1ify" path="res://Script/Old Files/map_3.gd" id="1_a50su"]
+[ext_resource type="PackedScene" uid="uid://dep74e7vxb8ij" path="res://Scene/Old Files/Map3.tscn" id="2_3p0d8"]
+[ext_resource type="PackedScene" uid="uid://cql2gtys41xr7" path="res://Scene/Old Files/objects/spawner.tscn" id="3_xo3f8"]
+[ext_resource type="PackedScene" uid="uid://lx33v3qg02xp" path="res://Scene/Old Files/objects/moving_plat.tscn" id="4_3p0d8"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6yr2"]
+size = Vector2(100, 150)
+
+[node name="Map3" type="Node2D"]
+script = ExtResource("1_a50su")
+
+[node name="Objects" type="Node2D" parent="."]
+
+[node name="MovingPlat" parent="Objects" instance=ExtResource("4_3p0d8")]
+position = Vector2(272, 528)
+tileDistance = 71
+direction = Vector2i(0, -1)
+duration = 35.0
+platSize = 15
+autoStart = false
+oneStop = true
+
+[node name="MovingPlat2" parent="Objects" instance=ExtResource("4_3p0d8")]
+position = Vector2(1072, -1776)
+tileDistance = 13
+duration = 3.93
+platSize = 3
+
+[node name="Map3" parent="." instance=ExtResource("2_3p0d8")]
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(321, 436)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(16, -33)
+shape = SubResource("RectangleShape2D_q6yr2")
+
+[node name="Area2D2" type="Area2D" parent="."]
+position = Vector2(2377, -1804)
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D2"]
+position = Vector2(16, -33)
+shape = SubResource("RectangleShape2D_q6yr2")
+
+[node name="Spawner" parent="." instance=ExtResource("3_xo3f8")]
+EnemyType = "mushroom"
+SpawnPositions = Array[Vector2]([Vector2(90, -2175), Vector2(410, -2175)])
+amount = 45
+
+[node name="Spawner2" parent="." instance=ExtResource("3_xo3f8")]
+EnemyType = "mushroom"
+SpawnPositions = Array[Vector2]([Vector2(2210, -2250), Vector2(2620, -2250)])
+amount = 65

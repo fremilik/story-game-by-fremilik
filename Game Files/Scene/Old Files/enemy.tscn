@@ -1,0 +1,31 @@
+[gd_scene format=3 uid="uid://byjig3itdqifx"]
+
+[ext_resource type="Script" uid="uid://b0mlxhvicijrk" path="res://Script/Old Files/enemy.gd" id="1_yww8s"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_yww8s"]
+
+[node name="Enemy" type="CharacterBody2D"]
+collision_layer = 4
+script = ExtResource("1_yww8s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_yww8s")
+
+[node name="WallCast" type="RayCast2D" parent="."]
+
+[node name="GroundCast" type="RayCast2D" parent="."]
+
+[node name="DetectArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea"]
+
+[node name="HitBoxArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBoxArea"]

@@ -1,44 +1,53 @@
-[gd_scene load_steps=8 format=3 uid="uid://dotms266jb5mp"]
+[gd_scene format=3 uid="uid://dotms266jb5mp"]
 
 [ext_resource type="Texture2D" uid="uid://b8djuo3slvqw3" path="res://icon.svg" id="1_ejll3"]
-[ext_resource type="PackedScene" uid="uid://cqqoplb4oiurc" path="res://Scene/player.tscn" id="1_emx41"]
-[ext_resource type="Script" uid="uid://5jfrrgykyfbu" path="res://Script/world.gd" id="1_scul4"]
-[ext_resource type="PackedScene" uid="uid://ds0seqdycu8o7" path="res://Scene/Level/map_1.tscn" id="4_scul4"]
-
-[sub_resource type="CanvasTexture" id="CanvasTexture_xtl80"]
+[ext_resource type="PackedScene" uid="uid://cxml2t1y73ygh" path="res://Scene/characters/player.tscn" id="3_ejll3"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_emx41"]
 size = Vector2(2000, 20)
 
-[sub_resource type="TileSet" id="TileSet_scul4"]
-tile_size = Vector2i(32, 32)
+[sub_resource type="CanvasTexture" id="CanvasTexture_xtl80"]
 
-[node name="World" type="Node2D"]
-script = ExtResource("1_scul4")
+[node name="World" type="Node2D" unique_id=395308162]
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
-visible = false
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1085346978]
 position = Vector2(148, -236)
 scale = Vector2(4.0625, 4.17969)
 texture = ExtResource("1_ejll3")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1079044295]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1003703473]
+shape = SubResource("RectangleShape2D_emx41")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1426063367]
 modulate = Color(0.615686, 0.760784, 0.533333, 1)
 scale = Vector2(2000, 20)
 texture = SubResource("CanvasTexture_xtl80")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-visible = false
+[node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=986814542]
+position = Vector2(-94, -30)
+scale = Vector2(0.05, 2)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1281885575]
 shape = SubResource("RectangleShape2D_emx41")
-disabled = true
 
-[node name="Player" parent="." instance=ExtResource("1_emx41")]
-position = Vector2(-634, 284)
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=436403593]
+modulate = Color(0.615686, 0.760784, 0.533333, 1)
+scale = Vector2(2000, 20)
+texture = SubResource("CanvasTexture_xtl80")
 
-[node name="TileMapLayer" type="TileMapLayer" parent="."]
-tile_set = SubResource("TileSet_scul4")
+[node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=963916110]
+position = Vector2(243, -20)
+scale = Vector2(0.05, 1)
 
-[node name="Map1" parent="." instance=ExtResource("4_scul4")]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=158731019]
+shape = SubResource("RectangleShape2D_emx41")
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=2049591871]
+modulate = Color(0.615686, 0.760784, 0.533333, 1)
+scale = Vector2(2000, 20)
+texture = SubResource("CanvasTexture_xtl80")
+
+[node name="Player" parent="." unique_id=1713184507 instance=ExtResource("3_ejll3")]
+position = Vector2(0.48382568, -53.778587)

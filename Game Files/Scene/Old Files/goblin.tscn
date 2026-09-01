@@ -1,0 +1,40 @@
+[gd_scene format=3 uid="uid://v6xqq2lun77"]
+
+[ext_resource type="PackedScene" uid="uid://byjig3itdqifx" path="res://Scene/Old Files/enemy.tscn" id="1_aup2a"]
+[ext_resource type="Script" uid="uid://c8s727laxg1ph" path="res://Script/Old Files/goblin.gd" id="2_h6ek0"]
+[ext_resource type="SpriteFrames" uid="uid://coauff5x0h2ou" path="res://Resources/Old Files/goblin_sprites.tres" id="3_ekpkv"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tcy7i"]
+size = Vector2(22, 36)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h6ek0"]
+size = Vector2(450, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_colpn"]
+size = Vector2(34, 20)
+
+[node name="Goblin" instance=ExtResource("1_aup2a")]
+script = ExtResource("2_h6ek0")
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_tcy7i")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = ExtResource("3_ekpkv")
+animation = &"attack"
+offset = Vector2(0, -10)
+flip_h = true
+
+[node name="WallCast" parent="." index="2"]
+target_position = Vector2(-30, 0)
+
+[node name="GroundCast" parent="." index="3"]
+position = Vector2(-15, 5)
+target_position = Vector2(0, 30)
+
+[node name="CollisionShape2D" parent="DetectArea" index="0"]
+shape = SubResource("RectangleShape2D_h6ek0")
+
+[node name="CollisionShape2D" parent="HitBoxArea" index="0"]
+position = Vector2(-17, 0)
+shape = SubResource("RectangleShape2D_colpn")

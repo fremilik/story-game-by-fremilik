@@ -1,0 +1,43 @@
+[gd_scene format=3 uid="uid://cfllw650c22jg"]
+
+[ext_resource type="PackedScene" uid="uid://byjig3itdqifx" path="res://Scene/Old Files/enemy.tscn" id="1_h2fwv"]
+[ext_resource type="Script" uid="uid://bmr3721n3llc" path="res://Script/Old Files/mushroom.gd" id="2_4cts3"]
+[ext_resource type="SpriteFrames" uid="uid://cqi6l2s782nq2" path="res://Resources/Old Files/mushroom_sprites.tres" id="2_ios10"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ios10"]
+size = Vector2(20, 37)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4cts3"]
+size = Vector2(350, 30)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rdpy1"]
+size = Vector2(40, 20)
+
+[node name="Mushroom" instance=ExtResource("1_h2fwv")]
+script = ExtResource("2_4cts3")
+
+[node name="CollisionShape2D" parent="." index="0"]
+position = Vector2(0, -3.5)
+shape = SubResource("RectangleShape2D_ios10")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = ExtResource("2_ios10")
+animation = &"attack"
+frame = 7
+frame_progress = 1.0
+offset = Vector2(0, -10)
+
+[node name="WallCast" parent="." index="2"]
+target_position = Vector2(-30, 0)
+
+[node name="GroundCast" parent="." index="3"]
+position = Vector2(-15, 5)
+target_position = Vector2(0, 20)
+
+[node name="CollisionShape2D" parent="DetectArea" index="0"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_4cts3")
+
+[node name="CollisionShape2D" parent="HitBoxArea" index="0"]
+position = Vector2(20, 0)
+shape = SubResource("RectangleShape2D_rdpy1")

@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://cxml2t1y73ygh"]
+
+[ext_resource type="PackedScene" uid="uid://55n0tnw07sv1" path="res://Scene/characters/parent_character.tscn" id="1_rrj0j"]
+[ext_resource type="Script" uid="uid://0ojrtn4lv2vm" path="res://Script/player.gd" id="2_83iky"]
+[ext_resource type="SpriteFrames" uid="uid://s6wu5jmj04tp" path="res://Resources/Sprite Frames/player_frames.tres" id="2_p48cs"]
+[ext_resource type="Script" uid="uid://o3mvq3j6qabu" path="res://Script/player_animation_state.gd" id="4_qh7qi"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_83iky"]
+radius = 6.0
+height = 22.0
+
+[node name="Player" unique_id=1713184507 instance=ExtResource("1_rrj0j")]
+script = ExtResource("2_83iky")
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1751257796]
+sprite_frames = ExtResource("2_p48cs")
+animation = &"attack"
+offset = Vector2(31, -22)
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1423494480]
+position = Vector2(-1, 0)
+shape = SubResource("CapsuleShape2D_83iky")
+
+[node name="Camera2D" type="Camera2D" parent="." index="2" unique_id=105557240]
+offset = Vector2(0, -80)
+zoom = Vector2(2.5, 2.5)
+
+[node name="PlayerAnimationState" type="Node" parent="." index="3" unique_id=1180459656]
+unique_name_in_owner = true
+script = ExtResource("4_qh7qi")
+
+[node name="FloorCast" type="RayCast2D" parent="." index="4" unique_id=2068142990]
+unique_name_in_owner = true
+position = Vector2(-1, 0)
+target_position = Vector2(0, 18)
+hit_from_inside = true

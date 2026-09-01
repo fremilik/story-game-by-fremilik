@@ -14,14 +14,21 @@ compatibility/default_parent_skeleton_in_mesh_instance_3d=true
 
 [application]
 
-config/name="One Chance Game"
+config/name="Just A Story Game"
 run/main_scene="uid://dotms266jb5mp"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
 [autoload]
 
-Global="*res://Script/global.gd"
+Global="*res://Script/Old Files/global.gd"
+
+[display]
+
+window/size/viewport_width=1980
+window/size/viewport_height=1080
+window/size/window_width_override=1280
+window/size/window_height_override=720
 
 [file_customization]
 

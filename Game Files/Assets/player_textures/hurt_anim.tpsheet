@@ -1,0 +1,78 @@
+{
+	"textures": [
+		{
+			"image": "hurt_anim.png",
+			"size": {
+				"w": 256,
+				"h": 64
+			},
+			"sprites": [
+				{
+					"filename": "get_hit01.png",
+					"region": {
+						"x": 0,
+						"y": 0,
+						"w": 64,
+						"h": 64
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "get_hit02.png",
+					"region": {
+						"x": 64,
+						"y": 0,
+						"w": 64,
+						"h": 64
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "get_hit03.png",
+					"region": {
+						"x": 128,
+						"y": 0,
+						"w": 64,
+						"h": 64
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				},
+				{
+					"filename": "get_hit04.png",
+					"region": {
+						"x": 192,
+						"y": 0,
+						"w": 64,
+						"h": 64
+					},
+					"margin": {
+						"x": 0,
+						"y": 0,
+						"w": 0,
+						"h": 0
+					}
+				}
+			]
+		}
+	],
+	"meta": {
+		"app": "http://free-tex-packer.com",
+		"version": "0.6.7",
+		"format": "RGBA8888",
+	}
+}

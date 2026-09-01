@@ -1,17 +1,17 @@
 extends Node2D
 
 
-const plBomb = preload("res://Scene/objects/bomb.tscn")
-const plGoblin = preload("res://Scene/goblin.tscn")
+#const plBomb = preload("res://Scene/objects/bomb.tscn")
+#const plGoblin = preload("res://Scene/goblin.tscn")
+#
+#const Map: Dictionary = {
+	#1: preload("res://Scene/Level/map_1.tscn"),
+	#2: preload("res://Scene/Level/map_2.tscn"),
+	#3: preload("res://Scene/Level/map_3.tscn"),
+	#4: preload("res://Scene/Level/map_4.tscn")
+#}
 
-const Map: Dictionary = {
-	1: preload("res://Scene/Level/map_1.tscn"),
-	2: preload("res://Scene/Level/map_2.tscn"),
-	3: preload("res://Scene/Level/map_3.tscn"),
-	4: preload("res://Scene/Level/map_4.tscn")
-}
-
-const NEXT_MAP_TILE_POS: Array[Vector2i] = [Vector2i(160, -8)]
+#const NEXT_MAP_TILE_POS: Array[Vector2i] = [Vector2i(160, -8)]
 
 
 func _ready() -> void:

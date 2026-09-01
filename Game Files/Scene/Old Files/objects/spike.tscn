@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bnifx0yehrvi6"]
+
+[ext_resource type="Script" uid="uid://cke8c3qltexw0" path="res://Script/Old Files/spike.gd" id="1_i6k58"]
+[ext_resource type="Texture2D" uid="uid://bgm0smd233k3j" path="res://Assets/CastleTiles.png" id="2_s41ck"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e5arm"]
+size = Vector2(32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rm0of"]
+atlas = ExtResource("2_s41ck")
+region = Rect2(192, 32, 32, 32)
+
+[node name="Spike" type="Area2D"]
+collision_layer = 0
+collision_mask = 6
+script = ExtResource("1_i6k58")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_e5arm")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+texture = SubResource("AtlasTexture_rm0of")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

@@ -1,0 +1,15 @@
+[gd_scene format=3 uid="uid://qc86q74uujwo"]
+
+[ext_resource type="PackedScene" uid="uid://byjig3itdqifx" path="res://Scene/Old Files/enemy.tscn" id="1_83je2"]
+[ext_resource type="SpriteFrames" uid="uid://bk4vghs7cg34t" path="res://Resources/Old Files/flying_eye_sprite.tres" id="2_y6xhs"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pmtv7"]
+
+[node name="FlyingEye" unique_id=1983428826 instance=ExtResource("1_83je2")]
+
+[node name="CollisionShape2D" parent="." index="0"]
+shape = SubResource("RectangleShape2D_pmtv7")
+
+[node name="AnimatedSprite2D" parent="." index="1"]
+sprite_frames = ExtResource("2_y6xhs")
+animation = &"attack"
