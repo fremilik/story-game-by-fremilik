@@ -1,177 +1,153 @@
 extends Node
+class_name PlayerStateMachine
 
-#@onready var Player: CharacterBody2D = $".."
+@onready var Player: CharacterBody2D = $".."
 @onready var AnimSprite: AnimatedSprite2D = $"../AnimatedSprite2D"
+
+const ATTACK_STRIKE_FRAME: Dictionary[ActionStates, int] = {
+	ActionStates.HEAVY_ATTACK : 8
+}
 
 var PlayerSpriteFrame: SpriteFrames = preload("res://Resources/Sprite Frames/player_frames.tres")
 
-var currentState := {
-	Player.AnimStates.MOVEMENT : null,
-	Player.AnimStates.ACTION : null,
-	Player.AnimStates.DISABILITY : null
+var currentState: Dictionary[AnimStates, int] = {
+	AnimStates.MOVEMENT : -1,
+	AnimStates.ACTION : -1,
+	AnimStates.DISABILITY : -1
 }
 
-var newState := {
-	Player.AnimStates.MOVEMENT : null,
-	Player.AnimStates.ACTION : null,
-	Player.AnimStates.DISABILITY : null
+var newState: Dictionary[AnimStates, int] = {
+	AnimStates.MOVEMENT : -1,
+	AnimStates.ACTION : -1,
+	AnimStates.DISABILITY : -1
 }
 
-var processState := {
-	Player.AnimStates.MOVEMENT : false,
-	Player.AnimStates.ACTION : false,
-	Player.AnimStates.DISABILITY : false
+var processState: Dictionary[AnimStates, bool] = {
+	AnimStates.MOVEMENT : false,
+	AnimStates.ACTION : false,
+	AnimStates.DISABILITY : false
 }
 
-#var currentMovementState: Player.MovementStates
-#var newMovementState: Player.MovementStates
-#var currentActionState: Player.ActionStates
-#var newActionState: Player.ActionStates
+var isInCurrentState: Dictionary[AnimStates, bool] = {
+	AnimStates.MOVEMENT : false,
+	AnimStates.ACTION : false,
+	AnimStates.DISABILITY : false
+}
 
-#var processActionState: bool
-#var processMovementState: bool
+var processStepCall: int
+
+enum AnimStates {MOVEMENT, ACTION, DISABILITY}
+enum MovementStates {IDLE, RUNNING, ON_AIR, HURT, DEAD}
+enum ActionStates {NULL, ATTACK, ON_AIR_ATTACK, HEAVY_ATTACK}
+
+
 
 func _process(_delta: float) -> void:
-	if processState[Player.AnimStates.MOVEMENT]: _process_movement_state(_delta)
-	if processState[Player.AnimStates.ACTION]: _process_action_state(_delta)
-
-
-
-func _player_movement_state_update(state: Player.MovementStates) -> void:
-	#print("Entered Movement State: %s" % Player.MovementStates.find_key(state))
-	#print("Current state: %s" % Player.MovementStates.find_key(currentState))
-	
-	processState[Player.AnimStates.MOVEMENT] = false
-	newState[Player.AnimStates.MOVEMENT] = state
-	
-	if currentState[Player.AnimStates.MOVEMENT] == null:
-		enter_new_movement_state(state)
-	elif not currentState[Player.AnimStates.MOVEMENT] == state:
-		_exit_movement_state(currentState[Player.AnimStates.MOVEMENT])
-	
-
-
-func _player_action_state_update(state: Player.ActionStates) -> void:
-	processState[Player.AnimStates.ACTION] = false
-	newState[Player.AnimStates.ACTION] = state
-	
-	print("Update action state: %s" % Player.ActionStates.find_key(state))
-	if currentState[Player.AnimStates.ACTION] == null:
-		print("first action call")
-		enter_new_action_state(state)
-	elif not currentState[Player.AnimStates.ACTION] == state:
-		print("exit from current state")
-		_exit_action_state(currentState[Player.AnimStates.ACTION])
-	
-
-
-
-#region Movement State
-func enter_new_movement_state(new_state: Player.MovementStates) -> void:
-	currentState[Player.AnimStates.MOVEMENT] = new_state
-	#print("Anim Finished, Enter new state: %s" % Player.MovementStates.find_key(new_state))
-	_enter_movement_state(new_state)
-	processState[Player.AnimStates.MOVEMENT] = true
-	
-
-
-
-func _enter_movement_state(state: Player.MovementStates) -> void:
-	if not currentState[Player.AnimStates.ACTION] == Player.ActionStates.NULL:
-		match state:
-			Player.MovementStates.IDLE:
-				AnimSprite.play("idle")
-				#_anim_offset_check("idle")
-			Player.MovementStates.RUNNING:
-				AnimSprite.play("run")
-				#_anim_offset_check("run")
-			Player.MovementStates.ON_AIR:
-				AnimSprite.play("jump")
-				#_anim_offset_check("jump")
-		
-
-
-func _process_movement_state(_delta: float) -> void:
-	if currentState[Player.AnimStates.ACTION] == Player.ActionStates.NULL: return
-	
 	pass
-
-
-
-func _exit_movement_state(state: Player.MovementStates) -> void:
-	#print("entered exit...")
+	_check_for_state_update()
+	process_state()
 	
-	var skipAnimation: bool = false
-	if not currentState[Player.AnimStates.ACTION] == Player.ActionStates.NULL:
-		AnimSprite.stop()
+
+
+
+func _check_for_state_update() -> void:
+	if not newState[AnimStates.MOVEMENT] == Player.currentMovementState:
+		print("new MOVEMENT")
+		newState[AnimStates.MOVEMENT] = Player.currentMovementState
+		
+		if currentState[AnimStates.ACTION] == ActionStates.NULL:
+			if currentState[AnimStates.MOVEMENT] == -1:
+				enter_state(AnimStates.MOVEMENT, newState[AnimStates.MOVEMENT])
+			elif isInCurrentState[AnimStates.MOVEMENT]:
+				exit_state(AnimStates.MOVEMENT)
+	
+	
+	if not newState[AnimStates.ACTION] == Player.currentActionState:
+		print("new ACTION")
+		newState[AnimStates.ACTION] = Player.currentActionState
+		
+		if currentState[AnimStates.ACTION] == -1:
+			enter_state(AnimStates.ACTION, newState[AnimStates.ACTION])
+		elif isInCurrentState[AnimStates.ACTION]:
+			exit_state(AnimStates.ACTION)
+		
+
+
+
+func enter_state(anim_state: AnimStates, state: int) -> void:
+	AnimSprite.stop()
+	if anim_state == AnimStates.MOVEMENT:
 		match state:
-			Player.MovementStates.RUNNING:
-				AnimSprite.play("stop")
-				
-				if newState[Player.AnimStates.MOVEMENT] == Player.MovementStates.ON_AIR: skipAnimation = true
-			Player.MovementStates.ON_AIR:
-				AnimSprite.play_backwards("jump")
+			MovementStates.IDLE:
+				AnimSprite.play("idle")
+			MovementStates.RUNNING:
+				AnimSprite.play("run")
+			MovementStates.ON_AIR:
+				AnimSprite.play("on_air")
+	elif anim_state == AnimStates.ACTION:
+		processState[AnimStates.MOVEMENT] = false
+		match state:
+			ActionStates.NULL:
+				enter_state(AnimStates.MOVEMENT, newState[AnimStates.MOVEMENT])
+			ActionStates.ATTACK:
+				AnimSprite.play("attack")
+	
+	currentState[anim_state] = state
+	isInCurrentState[anim_state] = true
+	
+	processStepCall = 0
+	processState[anim_state] = true
+	
+
+
+
+func process_state() -> void:
+	#if processState[AnimStates.MOVEMENT]: pass
+	
+	if processState[AnimStates.ACTION]:
+		match currentState[AnimStates.ACTION]:
+			ActionStates.HEAVY_ATTACK:
+				print("heavy attack process")
+				if not AnimSprite.is_playing() and processStepCall == 0:
+					print("INITAILIZE ATTCK")
+					AnimSprite.play("heavy_attack")
+					processStepCall += 1
+				elif AnimSprite.frame == ATTACK_STRIKE_FRAME[ActionStates.HEAVY_ATTACK] - 1 and processStepCall == 1:
+					print("PAUSE FRAME")
+					AnimSprite.pause()
+					processStepCall += 1
+	
+
+
+
+func exit_state(anim_state: AnimStates) -> void:
+	processState[anim_state] = false
+	
+	var skipAnimation: bool
+	if anim_state == AnimStates.MOVEMENT:
+		isInCurrentState[AnimStates.MOVEMENT] = false
+		#if currentState[AnimStates.ACTION] == ActionStates.NULL:
+		match currentState[AnimStates.MOVEMENT]:
+			MovementStates.RUNNING:
+				if newState[AnimStates.MOVEMENT] == MovementStates.ON_AIR:
+					skipAnimation = true
+				else: AnimSprite.play("stop")
+			MovementStates.ON_AIR:
+				AnimSprite.play_backwards("on_air")
 		
+	elif anim_state == AnimStates.ACTION:
+		isInCurrentState[AnimStates.ACTION] = false
 		
-		if AnimSprite.is_playing() and not skipAnimation:
+		match currentState[AnimStates.ACTION]:
+			ActionStates.HEAVY_ATTACK:
+				if AnimSprite.frame == ATTACK_STRIKE_FRAME[ActionStates.HEAVY_ATTACK] - 1:
+					AnimSprite.play("", 2.7)
+		
+	
+	if AnimSprite.is_playing() and not skipAnimation:
 			if PlayerSpriteFrame.get_animation_loop_mode(AnimSprite.animation) == SpriteFrames.LoopMode.LOOP_NONE:
 				await AnimSprite.animation_finished
 	
-	enter_new_movement_state(newState[Player.AnimStates.MOVEMENT])
-#endregion
-
-
-
-
-#region Action State
-func enter_new_action_state(new_state: Player.ActionStates) -> void:
-	currentState[Player.AnimStates.ACTION] = new_state
-	print("enter new action state: %s" % Player.ActionStates.find_key(new_state))
 	
-	if not new_state == Player.ActionStates.NULL:
-		_enter_action_state(new_state)
-		processState[Player.AnimStates.ACTION] = true
-	
-
-
-
-func _enter_action_state(state: Player.ActionStates) -> void:
-	print("enter action state: %s" % Player.ActionStates.find_key(state))
-	match state:
-		Player.ActionStates.ATTACK:
-			AnimSprite.play("attack")
-			#_anim_offset_check("attack")
-		Player.ActionStates.JUMP_ATTACK:
-			AnimSprite.play("jump_attack")
-			#_anim_offset_check("jump_attack")
-		Player.ActionStates.HEAVY_ATTACK:
-			AnimSprite.play("heavy_attack")
-			#_anim_offset_check("heavy_attack")
-		
-
-
-func _process_action_state(_delta: float) -> void:
-	
-	
-	pass
-
-
-
-func _exit_action_state(state: Player.ActionStates) -> void:
-	#print("entered exit...")
-	var skipAnimation: bool = false
-	print("exit action state: %s" % Player.ActionStates.find_key(state))
-	AnimSprite.stop()
-	match state:
-		Player.ActionStates.ATTACK:
-			pass
-		Player.ActionStates.JUMP_ATTACK:
-			pass
-	
-	
-	if AnimSprite.is_playing() and not skipAnimation:
-		if PlayerSpriteFrame.get_animation_loop_mode(AnimSprite.animation) == SpriteFrames.LoopMode.LOOP_NONE:
-			await AnimSprite.animation_finished
-	
-	enter_new_action_state(newState[Player.AnimStates.ACTION])
-#endregion
+	if anim_state == AnimStates.MOVEMENT: enter_state(anim_state, newState[AnimStates.MOVEMENT])
+	elif anim_state == AnimStates.ACTION: enter_state(anim_state, newState[AnimStates.ACTION])

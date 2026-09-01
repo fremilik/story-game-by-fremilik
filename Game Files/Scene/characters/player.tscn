@@ -14,8 +14,7 @@ script = ExtResource("2_83iky")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1751257796]
 sprite_frames = ExtResource("2_p48cs")
-animation = &"attack"
-offset = Vector2(31, -22)
+animation = &"heavy_attack"
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1423494480]
 position = Vector2(-1, 0)
