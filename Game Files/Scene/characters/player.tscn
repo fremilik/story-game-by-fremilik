@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://0ojrtn4lv2vm" path="res://Script/player.gd" id="2_83iky"]
 [ext_resource type="SpriteFrames" uid="uid://s6wu5jmj04tp" path="res://Resources/Sprite Frames/player_frames.tres" id="2_p48cs"]
 [ext_resource type="Script" uid="uid://o3mvq3j6qabu" path="res://Script/player_animation_state.gd" id="4_qh7qi"]
+[ext_resource type="PackedScene" uid="uid://d4ce271d0e50e" path="res://Scene/Objects/attack_wave_projectile.tscn" id="5_cb0pm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_83iky"]
 radius = 6.0
@@ -14,7 +15,8 @@ script = ExtResource("2_83iky")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1751257796]
 sprite_frames = ExtResource("2_p48cs")
-animation = &"heavy_attack"
+animation = &"run"
+frame = 4
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1423494480]
 position = Vector2(-1, 0)
@@ -33,3 +35,7 @@ unique_name_in_owner = true
 position = Vector2(-1, 0)
 target_position = Vector2(0, 18)
 hit_from_inside = true
+
+[node name="PlayerAttackWave" parent="." index="5" unique_id=879981434 instance=ExtResource("5_cb0pm")]
+unique_name_in_owner = true
+visible = false

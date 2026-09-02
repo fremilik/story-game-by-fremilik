@@ -36,7 +36,8 @@ var healthPoint: float = 30.0
 var allowMovement: bool = true
 
 func _ready() -> void:
-	pass
+	initDirection = 1.0
+	
 
 
 

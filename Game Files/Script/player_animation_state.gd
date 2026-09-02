@@ -4,6 +4,7 @@ class_name PlayerStateMachine
 @onready var Player: CharacterBody2D = $".."
 @onready var AnimSprite: AnimatedSprite2D = $"../AnimatedSprite2D"
 
+
 const ATTACK_STRIKE_FRAME: Dictionary[ActionStates, int] = {
 	ActionStates.HEAVY_ATTACK : 8
 }
@@ -107,13 +108,13 @@ func process_state() -> void:
 	if processState[AnimStates.ACTION]:
 		match currentState[AnimStates.ACTION]:
 			ActionStates.HEAVY_ATTACK:
-				print("heavy attack process")
+				#print("heavy attack process")
 				if not AnimSprite.is_playing() and processStepCall == 0:
 					print("INITAILIZE ATTCK")
 					AnimSprite.play("heavy_attack")
 					processStepCall += 1
 				elif AnimSprite.frame == ATTACK_STRIKE_FRAME[ActionStates.HEAVY_ATTACK] - 1 and processStepCall == 1:
-					print("PAUSE FRAME")
+					#print("PAUSE FRAME")
 					AnimSprite.pause()
 					processStepCall += 1
 	
@@ -141,7 +142,10 @@ func exit_state(anim_state: AnimStates) -> void:
 		match currentState[AnimStates.ACTION]:
 			ActionStates.HEAVY_ATTACK:
 				if AnimSprite.frame == ATTACK_STRIKE_FRAME[ActionStates.HEAVY_ATTACK] - 1:
+					print("Player direction: %s" % Player.initDirection)
 					AnimSprite.play("", 2.7)
+					await get_tree().create_timer(0.1).timeout
+					%PlayerAttackWave.activate(int(Player.initDirection))
 		
 	
 	if AnimSprite.is_playing() and not skipAnimation:

@@ -1,0 +1,81 @@
+[gd_scene format=3 uid="uid://d4ce271d0e50e"]
+
+[ext_resource type="Texture2D" uid="uid://nvsw085o1x6h" path="res://Assets/player_textures/attack_wave_texture.png" id="1_f176f"]
+[ext_resource type="Script" uid="uid://n4h4x4n6ig8i" path="res://Script/Object/attack_wave_projectile.gd" id="2_eik0w"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_eik0w"]
+atlas = ExtResource("1_f176f")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_vsesc"]
+atlas = ExtResource("1_f176f")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_io5fp"]
+atlas = ExtResource("1_f176f")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4ah2h"]
+atlas = ExtResource("1_f176f")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_h1vsw"]
+atlas = ExtResource("1_f176f")
+region = Rect2(256, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2awjy"]
+atlas = ExtResource("1_f176f")
+region = Rect2(320, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pgu3t"]
+atlas = ExtResource("1_f176f")
+region = Rect2(384, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_4kxuq"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_eik0w")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_vsesc")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_io5fp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4ah2h")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_h1vsw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2awjy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pgu3t")
+}],
+"loop": 0,
+"name": &"destroy",
+"speed": 25.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4kxuq"]
+size = Vector2(20, 15)
+
+[node name="PlayerAttackWave" type="AnimatedSprite2D" unique_id=879981434]
+texture_filter = 1
+sprite_frames = SubResource("SpriteFrames_4kxuq")
+animation = &"destroy"
+offset = Vector2(0, -20)
+script = ExtResource("2_eik0w")
+
+[node name="WallCollideArea" type="Area2D" parent="." unique_id=1633892198]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallCollideArea" unique_id=2054785937]
+position = Vector2(1.7647057, -19.999998)
+scale = Vector2(1.0000002, 1.0000002)
+shape = SubResource("RectangleShape2D_4kxuq")
+
+[connection signal="body_entered" from="WallCollideArea" to="." method="_on_wall_collide_area_body_entered"]
