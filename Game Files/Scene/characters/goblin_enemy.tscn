@@ -1,0 +1,27 @@
+[gd_scene format=3 uid="uid://d2ilxsd3ytlon"]
+
+[ext_resource type="PackedScene" uid="uid://dev8ryqaixli5" path="res://Scene/characters/abstract_enemy.tscn" id="1_ratqe"]
+[ext_resource type="SpriteFrames" uid="uid://wwltsvalgshd" path="res://Resources/Sprite Frames/goblin_frames.tres" id="2_1rlsf"]
+[ext_resource type="Script" uid="uid://d12jur210ii2o" path="res://Script/Characters/Basic Enemy/goblin_enemy.gd" id="2_o2c8s"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_anr54"]
+height = 40.0
+
+[node name="Goblin" unique_id=1713184507 instance=ExtResource("1_ratqe")]
+scale = Vector2(1.2, 1.2)
+script = ExtResource("2_o2c8s")
+
+[node name="AnimatedSprite2D" parent="." index="0" unique_id=1751257796]
+sprite_frames = ExtResource("2_1rlsf")
+animation = &"move"
+
+[node name="CollisionShape2D" parent="." index="1" unique_id=1423494480]
+position = Vector2(1, 7)
+shape = SubResource("CapsuleShape2D_anr54")
+
+[node name="NavigationAgent2D" parent="." index="2" unique_id=1503703087]
+debug_enabled = true
+
+[node name="OffPlatformCast" parent="." index="3" unique_id=830583449]
+position = Vector2(20, 0)
+target_position = Vector2(0, 40)

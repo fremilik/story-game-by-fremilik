@@ -1,0 +1,48 @@
+{
+    "activeFile": "Nav Test Map.tmx",
+    "expandedProjectPaths": [
+    ],
+    "fileStates": {
+        "": {
+            "scaleInDock": 1
+        },
+        "Nav Test Map.tmx": {
+            "scale": 1,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": -291,
+                "y": 341.5
+            }
+        },
+        "Nav Test Map.tmx#nav_tileset": {
+            "dynamicWrapping": true
+        },
+        "Terreno.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        },
+        "nav_tileset.tsx": {
+            "dynamicWrapping": false,
+            "scaleInDock": 3,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/user/Documents/Game Documents/Godot Projects/A story game with no name yet/Game Files/Scene",
+    "last.imagePath": "C:/Users/user/Documents/Game Documents/Godot Projects/A story game with no name yet/Game Files/Assets",
+    "map.fixedSize": false,
+    "map.lastUsedExportFilter": "Godot 4 Scene files (*.tscn)",
+    "map.lastUsedFormat": "tmx",
+    "openFiles": [
+        "Nav Test Map.tmx",
+        "Terreno.tsx",
+        "nav_tileset.tsx"
+    ],
+    "project": "StoryGameTiledProject.tiled-project",
+    "recentFiles": [
+        "nav_tileset.tsx",
+        "Terreno.tsx",
+        "Nav Test Map.tmx"
+    ],
+    "tileset.lastUsedFormat": "tsx"
+}

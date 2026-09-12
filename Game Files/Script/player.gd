@@ -2,20 +2,13 @@ extends CharacterBody2D
 
 @onready var AnimSprite: AnimatedSprite2D = $AnimatedSprite2D
 
-@export var SPEED: float = 180
-@export var JUMP_FORCE: float = 340
-@export var GRAVITY: float = 19.5
+const SPEED: float = 270
+const JUMP_FORCE: float = 560
+#@export var GRAVITY: float = 19.5
 
 
 const ATTACK_SPAM_TIME: float = 0.4
 const HEAVY_ATTACK_HOLD_TIME: float = 0.25
-#const ANIM_OFFSET_POS: Dictionary = {
-	#["jump"] : Vector2(0, 0),
-	#["idle", "stop", "run", "hurt", "death"] : Vector2(0, -21),
-	#["attack"] : Vector2(31, -22),
-	#["heavy_attack"] : Vector2(28, -22),
-	#["jump_attack"] : Vector2(28, -5)
-#}
 
 
 enum Directions {LEFT = -1, RIGHT = 1}
@@ -47,15 +40,17 @@ func _process(delta: float) -> void:
 	action_state_check(delta)
 	movement_state_check()
 	
+	Global.PlayerPos = global_position
+	
 
 
 
 func _physics_process(_delta: float) -> void:
 	if not is_on_floor():
-		velocity.y += GRAVITY
+		velocity.y += Global.GRAVITY
 	
 	if Input.is_action_just_pressed("jump") and is_on_floor():
-		velocity.y = -JUMP_FORCE
+		velocity.y = -1 * JUMP_FORCE
 	
 	direction = Input.get_axis("left", "right")
 	
@@ -80,19 +75,8 @@ func direction_check() -> void:
 				AnimSprite.flip_h = false
 				#HitBoxCol.position.x = 30
 		
-		#_anim_offset_check(AnimSprite.animation)
 
 
-
-#func _anim_offset_check(anim: String) -> void:
-	#for key in ANIM_OFFSET_POS.keys():
-		##print("searching")
-		#if key.has(anim):
-			##print("has key: %s" % anim)
-			#if AnimSprite.flip_h:
-				#AnimSprite.offset = Vector2(-1 * ANIM_OFFSET_POS[key].x, ANIM_OFFSET_POS[key].y)
-			#else: AnimSprite.offset = ANIM_OFFSET_POS[key]
-		#
 
 func _action_state_update(action_state: PlayerStateMachine.ActionStates) -> void:
 	if not action_state == currentActionState:

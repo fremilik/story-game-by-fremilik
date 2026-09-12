@@ -53,7 +53,7 @@ func _process(_delta: float) -> void:
 
 func _check_for_state_update() -> void:
 	if not newState[AnimStates.MOVEMENT] == Player.currentMovementState:
-		print("new MOVEMENT")
+		#print("new MOVEMENT")
 		newState[AnimStates.MOVEMENT] = Player.currentMovementState
 		
 		if currentState[AnimStates.ACTION] == ActionStates.NULL:
@@ -64,7 +64,7 @@ func _check_for_state_update() -> void:
 	
 	
 	if not newState[AnimStates.ACTION] == Player.currentActionState:
-		print("new ACTION")
+		#print("new ACTION")
 		newState[AnimStates.ACTION] = Player.currentActionState
 		
 		if currentState[AnimStates.ACTION] == -1:
@@ -110,7 +110,7 @@ func process_state() -> void:
 			ActionStates.HEAVY_ATTACK:
 				#print("heavy attack process")
 				if not AnimSprite.is_playing() and processStepCall == 0:
-					print("INITAILIZE ATTCK")
+					#print("INITAILIZE ATTCK")
 					AnimSprite.play("heavy_attack")
 					processStepCall += 1
 				elif AnimSprite.frame == ATTACK_STRIKE_FRAME[ActionStates.HEAVY_ATTACK] - 1 and processStepCall == 1:
@@ -142,10 +142,11 @@ func exit_state(anim_state: AnimStates) -> void:
 		match currentState[AnimStates.ACTION]:
 			ActionStates.HEAVY_ATTACK:
 				if AnimSprite.frame == ATTACK_STRIKE_FRAME[ActionStates.HEAVY_ATTACK] - 1:
-					print("Player direction: %s" % Player.initDirection)
+					#print("Player direction: %s" % Player.initDirection)
 					AnimSprite.play("", 2.7)
 					await get_tree().create_timer(0.1).timeout
 					%PlayerAttackWave.activate(int(Player.initDirection))
+				else: AnimSprite.stop()
 		
 	
 	if AnimSprite.is_playing() and not skipAnimation:

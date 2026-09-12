@@ -1,0 +1,16 @@
+[gd_scene format=3 uid="uid://dev8ryqaixli5"]
+
+[ext_resource type="PackedScene" uid="uid://55n0tnw07sv1" path="res://Scene/characters/abstract_character.tscn" id="1_t2l6h"]
+[ext_resource type="Script" uid="uid://dbtnodjkf20a6" path="res://Script/Characters/Basic Enemy/abstract_enemy.gd" id="2_amopv"]
+
+[node name="CharacterBody2D" unique_id=1713184507 instance=ExtResource("1_t2l6h")]
+collision_layer = 4
+script = ExtResource("2_amopv")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="2" unique_id=1503703087]
+path_desired_distance = 40.0
+target_desired_distance = 30.0
+navigation_layers = 3
+
+[node name="OffPlatformCast" type="RayCast2D" parent="." index="3" unique_id=830583449]
+unique_name_in_owner = true

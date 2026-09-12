@@ -1,7 +1,10 @@
 [gd_scene format=3 uid="uid://dotms266jb5mp"]
 
 [ext_resource type="Texture2D" uid="uid://b8djuo3slvqw3" path="res://icon.svg" id="1_ejll3"]
+[ext_resource type="Script" uid="uid://ca7n4objdcl4l" path="res://Script/world.gd" id="1_pcvp0"]
 [ext_resource type="PackedScene" uid="uid://cxml2t1y73ygh" path="res://Scene/characters/player.tscn" id="3_ejll3"]
+[ext_resource type="PackedScene" uid="uid://d2ilxsd3ytlon" path="res://Scene/characters/goblin_enemy.tscn" id="3_scul4"]
+[ext_resource type="PackedScene" uid="uid://bb5jnnqsb0v2u" path="res://Scene/Nav Test Map.tscn" id="4_scul4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_emx41"]
 size = Vector2(2000, 20)
@@ -9,40 +12,48 @@ size = Vector2(2000, 20)
 [sub_resource type="CanvasTexture" id="CanvasTexture_xtl80"]
 
 [node name="World" type="Node2D" unique_id=395308162]
+script = ExtResource("1_pcvp0")
 
 [node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1085346978]
+visible = false
 position = Vector2(148, -236)
 scale = Vector2(4.0625, 4.17969)
 texture = ExtResource("1_ejll3")
 
-[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1079044295]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1003703473]
-shape = SubResource("RectangleShape2D_emx41")
-
-[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1426063367]
-modulate = Color(0.615686, 0.760784, 0.533333, 1)
-scale = Vector2(2000, 20)
-texture = SubResource("CanvasTexture_xtl80")
-
 [node name="StaticBody2D2" type="StaticBody2D" parent="." unique_id=986814542]
-position = Vector2(-94, -30)
-scale = Vector2(0.05, 2)
+visible = false
+position = Vector2(-93, -50)
+scale = Vector2(0.05, 4)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D2" unique_id=1281885575]
 shape = SubResource("RectangleShape2D_emx41")
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D2" unique_id=436403593]
 modulate = Color(0.615686, 0.760784, 0.533333, 1)
 scale = Vector2(2000, 20)
 texture = SubResource("CanvasTexture_xtl80")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1079044295]
+visible = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1003703473]
+shape = SubResource("RectangleShape2D_emx41")
+disabled = true
+
+[node name="Sprite2D" type="Sprite2D" parent="StaticBody2D" unique_id=1426063367]
+modulate = Color(0.615686, 0.760784, 0.533333, 1)
+scale = Vector2(2000, 20)
+texture = SubResource("CanvasTexture_xtl80")
+
 [node name="StaticBody2D3" type="StaticBody2D" parent="." unique_id=963916110]
+visible = false
 position = Vector2(243, -20)
 scale = Vector2(0.05, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D3" unique_id=158731019]
 shape = SubResource("RectangleShape2D_emx41")
+disabled = true
 
 [node name="Sprite2D" type="Sprite2D" parent="StaticBody2D3" unique_id=2049591871]
 modulate = Color(0.615686, 0.760784, 0.533333, 1)
@@ -51,3 +62,15 @@ texture = SubResource("CanvasTexture_xtl80")
 
 [node name="Player" parent="." unique_id=1713184507 instance=ExtResource("3_ejll3")]
 position = Vector2(0.48382568, -53.778587)
+scale = Vector2(2, 2)
+SPEED = 270.0
+JUMP_FORCE = 550.0
+
+[node name="Goblin" parent="." unique_id=1619564556 instance=ExtResource("3_scul4")]
+position = Vector2(150, -125)
+
+[node name="Nav Test Map" parent="." unique_id=531054195 instance=ExtResource("4_scul4")]
+z_index = -1
+position = Vector2(-37, -225)
+
+[node name="MapNavLinks" type="Node2D" parent="." unique_id=1287958195]
