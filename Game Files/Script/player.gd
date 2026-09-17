@@ -1,37 +1,39 @@
 extends CharacterBody2D
 
 @onready var AnimSprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var NodeFlipPos: Dictionary[Node2D, Vector2] = {
+	%HitBox.get_node("CollisionShape2D") : %HitBox.get_node("CollisionShape2D").position
+}
 
 const SPEED: float = 270
 const JUMP_FORCE: float = 560
-#@export var GRAVITY: float = 19.5
-
-
 const ATTACK_SPAM_TIME: float = 0.4
 const HEAVY_ATTACK_HOLD_TIME: float = 0.25
 
-
 enum Directions {LEFT = -1, RIGHT = 1}
 
+var healthPoint: float = 100
 var direction: float = 0
 var initDirection: float = 0.0
-var initPos: Vector2
-#var initMovementState: PlayerStateMachine.MovementStates
 
 var currentMovementState: PlayerStateMachine.MovementStates
 var currentActionState: PlayerStateMachine.ActionStates : set = _action_state_update
 
-var bodiesInHitBox: Array
+var bodiesInHitBox: Array[Node2D]
 var damageValue: float = 1.0
-var hasStrike: bool = false
-var healthPoint: float = 30.0
+#var hasStrike: bool = false
 
 var allowMovement: bool = true
+
+
 
 func _ready() -> void:
 	initDirection = 1.0
 	
-
+	%HitBox.body_entered.connect(handle_bodies_in_hit_box.bind("entered"))
+	%HitBox.body_exited.connect(handle_bodies_in_hit_box.bind("exited"))
+	
+	
 
 
 
@@ -63,17 +65,44 @@ func _physics_process(_delta: float) -> void:
 
 
 
+func handle_bodies_in_hit_box(body: Node2D, action: String) -> void:
+	if action == "entered":
+		print("BODY ENTERED")
+		bodiesInHitBox.append(body)
+	elif action == "exited":
+		print("BODY EXITED")
+		bodiesInHitBox.erase(body)
+	
+
+
+func damage_bodies_in_hit_box() -> void:
+	for body in bodiesInHitBox:
+		if body and is_instance_valid(body):
+			if body.has_method("damage"):
+				body.damage(self, 20)
+	
+	
+
+
+
+
 func direction_check() -> void:
 	if not initDirection == direction and direction:
 		initDirection = direction
 		
+		var signFlip: int
+		
 		match int(direction):
 			Directions.LEFT:
 				AnimSprite.flip_h = true
-				#HitBoxCol.position.x = -30
+				signFlip = -1
 			Directions.RIGHT:
 				AnimSprite.flip_h = false
-				#HitBoxCol.position.x = 30
+				signFlip = 1
+		
+		for node in NodeFlipPos:
+			node.position.x = signFlip * NodeFlipPos[node].x
+			
 		
 
 

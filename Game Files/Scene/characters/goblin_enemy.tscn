@@ -10,10 +10,11 @@ height = 40.0
 [node name="Goblin" unique_id=1713184507 instance=ExtResource("1_ratqe")]
 scale = Vector2(1.2, 1.2)
 script = ExtResource("2_o2c8s")
+EnemyName = &"Goblin"
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1751257796]
 sprite_frames = ExtResource("2_1rlsf")
-animation = &"move"
+animation = &"hurt"
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1423494480]
 position = Vector2(1, 7)
@@ -25,3 +26,6 @@ debug_enabled = true
 [node name="OffPlatformCast" parent="." index="3" unique_id=830583449]
 position = Vector2(20, 0)
 target_position = Vector2(0, 40)
+
+[node name="EnemyAnimationState" parent="." index="4" unique_id=1996797651]
+EnemySpriteFrame = ExtResource("2_1rlsf")

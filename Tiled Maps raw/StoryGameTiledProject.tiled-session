@@ -7,11 +7,11 @@
             "scaleInDock": 1
         },
         "Nav Test Map.tmx": {
-            "scale": 1,
-            "selectedLayer": 3,
+            "scale": 0.75,
+            "selectedLayer": 2,
             "viewCenter": {
-                "x": -291,
-                "y": 341.5
+                "x": 140,
+                "y": 209.99999999999994
             }
         },
         "Nav Test Map.tmx#nav_tileset": {
@@ -19,12 +19,12 @@
         },
         "Terreno.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 3,
+            "scaleInDock": 1.5,
             "scaleInEditor": 1
         },
         "nav_tileset.tsx": {
             "dynamicWrapping": false,
-            "scaleInDock": 3,
+            "scaleInDock": 1.5,
             "scaleInEditor": 1
         }
     },

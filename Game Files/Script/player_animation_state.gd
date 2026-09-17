@@ -5,8 +5,10 @@ class_name PlayerStateMachine
 @onready var AnimSprite: AnimatedSprite2D = $"../AnimatedSprite2D"
 
 
-const ATTACK_STRIKE_FRAME: Dictionary[ActionStates, int] = {
-	ActionStates.HEAVY_ATTACK : 8
+const ATTACK_STRIKE_FRAME: Dictionary = {
+	ActionStates.HEAVY_ATTACK : 8,
+	ActionStates.ATTACK : [1, 6, 11]
+	
 }
 
 var PlayerSpriteFrame: SpriteFrames = preload("res://Resources/Sprite Frames/player_frames.tres")
@@ -36,6 +38,7 @@ var isInCurrentState: Dictionary[AnimStates, bool] = {
 }
 
 var processStepCall: int
+var currentFrameStrike: int
 
 enum AnimStates {MOVEMENT, ACTION, DISABILITY}
 enum MovementStates {IDLE, RUNNING, ON_AIR, HURT, DEAD}
@@ -82,7 +85,7 @@ func enter_state(anim_state: AnimStates, state: int) -> void:
 			MovementStates.IDLE:
 				AnimSprite.play("idle")
 			MovementStates.RUNNING:
-				AnimSprite.play("run")
+				AnimSprite.play("move")
 			MovementStates.ON_AIR:
 				AnimSprite.play("on_air")
 	elif anim_state == AnimStates.ACTION:
@@ -91,6 +94,7 @@ func enter_state(anim_state: AnimStates, state: int) -> void:
 			ActionStates.NULL:
 				enter_state(AnimStates.MOVEMENT, newState[AnimStates.MOVEMENT])
 			ActionStates.ATTACK:
+				currentFrameStrike = 0
 				AnimSprite.play("attack")
 	
 	currentState[anim_state] = state
@@ -107,6 +111,12 @@ func process_state() -> void:
 	
 	if processState[AnimStates.ACTION]:
 		match currentState[AnimStates.ACTION]:
+			ActionStates.ATTACK:
+				if ATTACK_STRIKE_FRAME[ActionStates.ATTACK].has(AnimSprite.frame) and not currentFrameStrike == AnimSprite.frame:
+					print("STRIKE")
+					currentFrameStrike = AnimSprite.frame
+					Player.damage_bodies_in_hit_box()
+					 
 			ActionStates.HEAVY_ATTACK:
 				#print("heavy attack process")
 				if not AnimSprite.is_playing() and processStepCall == 0:

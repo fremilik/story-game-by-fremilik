@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://55n0tnw07sv1" path="res://Scene/characters/abstract_character.tscn" id="1_t2l6h"]
 [ext_resource type="Script" uid="uid://dbtnodjkf20a6" path="res://Script/Characters/Basic Enemy/abstract_enemy.gd" id="2_amopv"]
+[ext_resource type="Script" uid="uid://cx6vgv0kqrlth" path="res://Script/Characters/Basic Enemy/enemy_animation_state.gd" id="3_ryivv"]
 
 [node name="CharacterBody2D" unique_id=1713184507 instance=ExtResource("1_t2l6h")]
 collision_layer = 4
@@ -14,3 +15,6 @@ navigation_layers = 3
 
 [node name="OffPlatformCast" type="RayCast2D" parent="." index="3" unique_id=830583449]
 unique_name_in_owner = true
+
+[node name="EnemyAnimationState" type="Node" parent="." index="4" unique_id=1996797651]
+script = ExtResource("3_ryivv")

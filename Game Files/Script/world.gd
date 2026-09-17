@@ -34,7 +34,7 @@ func _set_nav_links_at_proximity(cells_pos: Array[Vector2i]) -> void:
 			if not cell == cells_pos[cellIndex]:
 				cellDist = abs(cell - cells_pos[cellIndex])
 				if (cellDist.x <= MAX_JUMP_AXIS_DISTANCE.x and cellDist.y <= MAX_JUMP_AXIS_DISTANCE.y) and cellDist.length() <= MAX_JUMP_LENGHT:
-					print("cells are close; pos_a: %s| pos_b: %s| dist: %s" % [cells_pos[cellIndex], cell, cellDist])
+					#print("cells are close; pos_a: %s| pos_b: %s| dist: %s" % [cells_pos[cellIndex], cell, cellDist])
 					_create_nav_link_at_cells(cells_pos[cellIndex], cell)
 					
 		
