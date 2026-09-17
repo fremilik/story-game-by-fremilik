@@ -27,9 +27,9 @@ var handleLinkReached: bool = false
 var navLinkDetails: Dictionary
 
 
-var currentMovementState: EnemyStateMachine.MovementStates
-var currentActionState: EnemyStateMachine.ActionStates
-var currentDisabilityState: EnemyStateMachine.DisabilityStates
+var currentMovementState: CharacterStateMachine.MovementStates
+var currentActionState: CharacterStateMachine.ActionStates
+var currentDisabilityState: CharacterStateMachine.DisabilityStates
 
 
 func _init() -> void:
@@ -49,17 +49,17 @@ func _ready_setup() -> void:
 
 
 func _process(_delta: float) -> void:
-	if currentDisabilityState == EnemyStateMachine.DisabilityStates.DEAD: return
+	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD: return
 	
 	movement_state_check()
-	if not currentMovementState == EnemyStateMachine.MovementStates.IDLE:
+	if not currentMovementState == CharacterStateMachine.MovementStates.IDLE:
 		direction_check(direction)
 	
 
 
 var deltaCount: float
 func _physics_process(delta: float) -> void:
-	if currentDisabilityState == EnemyStateMachine.DisabilityStates.DEAD: return
+	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD: return
 	
 	if not is_on_floor():
 		velocity.y += Global.GRAVITY
@@ -129,11 +129,11 @@ func _on_link_reached(details: Dictionary) -> void:
 
 func movement_state_check() -> void:
 	if not velocity and is_on_floor():
-		currentMovementState = EnemyStateMachine.MovementStates.IDLE
+		currentMovementState = CharacterStateMachine.MovementStates.IDLE
 	elif velocity and is_on_floor():
-		currentMovementState = EnemyStateMachine.MovementStates.MOVING
+		currentMovementState = CharacterStateMachine.MovementStates.MOVING
 	elif not is_on_floor():
-		currentMovementState = EnemyStateMachine.MovementStates.ON_AIR
+		currentMovementState = CharacterStateMachine.MovementStates.ON_AIR
 
 
 func direction_check(look_at_direc: float) -> void:
@@ -153,16 +153,16 @@ func direction_check(look_at_direc: float) -> void:
 
 
 func damage(body: Node2D, value: float) -> void:
-	if currentDisabilityState == EnemyStateMachine.DisabilityStates.DEAD: return
+	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD: return
 	print("HURT")
 	direction_check(signf(body.global_position.x - global_position.x))
 	healthPoint -= value
-	currentDisabilityState = EnemyStateMachine.DisabilityStates.HURT
-	EnemyAnimState.apply_disable_state(EnemyStateMachine.DisabilityStates.HURT)
+	currentDisabilityState = CharacterStateMachine.DisabilityStates.HURT
+	EnemyAnimState.apply_disable_state(CharacterStateMachine.DisabilityStates.HURT)
 	
 	
 	if healthPoint <= 0:
 		print("DEAD")
-		currentDisabilityState = EnemyStateMachine.DisabilityStates.DEAD
-		EnemyAnimState.apply_disable_state(EnemyStateMachine.DisabilityStates.DEAD)
+		currentDisabilityState = CharacterStateMachine.DisabilityStates.DEAD
+		EnemyAnimState.apply_disable_state(CharacterStateMachine.DisabilityStates.DEAD)
 	

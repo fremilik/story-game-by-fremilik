@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://55n0tnw07sv1" path="res://Scene/characters/abstract_character.tscn" id="1_rrj0j"]
 [ext_resource type="Script" uid="uid://0ojrtn4lv2vm" path="res://Script/player.gd" id="2_83iky"]
 [ext_resource type="SpriteFrames" uid="uid://s6wu5jmj04tp" path="res://Resources/Sprite Frames/player_frames.tres" id="2_p48cs"]
-[ext_resource type="Script" uid="uid://o3mvq3j6qabu" path="res://Script/player_animation_state.gd" id="4_qh7qi"]
+[ext_resource type="Script" uid="uid://b6l0xxlegem1j" path="res://Script/Characters/player_animation_state.gd" id="4_cb0pm"]
 [ext_resource type="PackedScene" uid="uid://d4ce271d0e50e" path="res://Scene/Objects/attack_wave_projectile.tscn" id="5_cb0pm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_83iky"]
@@ -29,9 +29,16 @@ shape = SubResource("CapsuleShape2D_83iky")
 offset = Vector2(0, -80)
 zoom = Vector2(1.5, 1.5)
 
-[node name="PlayerAnimationState" type="Node" parent="." index="3" unique_id=1180459656]
+[node name="PlayerAnimationState" type="Node" parent="." index="3" unique_id=1180459656 node_paths=PackedStringArray("Parent", "AnimSprite")]
 unique_name_in_owner = true
-script = ExtResource("4_qh7qi")
+script = ExtResource("4_cb0pm")
+Parent = NodePath("..")
+AnimSprite = NodePath("../AnimatedSprite2D")
+ParentSpriteFrame = ExtResource("2_p48cs")
+AttackStrikeFrame = Dictionary[int, Variant]({
+1: [1, 6, 11],
+2: 8
+})
 
 [node name="FloorCast" type="RayCast2D" parent="." index="4" unique_id=2068142990]
 unique_name_in_owner = true

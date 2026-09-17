@@ -16,8 +16,8 @@ var healthPoint: float = 100
 var direction: float = 0
 var initDirection: float = 0.0
 
-var currentMovementState: PlayerStateMachine.MovementStates
-var currentActionState: PlayerStateMachine.ActionStates : set = _action_state_update
+var currentMovementState: CharacterStateMachine.MovementStates
+var currentActionState: CharacterStateMachine.ActionStates : set = _action_state_update
 
 var bodiesInHitBox: Array[Node2D]
 var damageValue: float = 1.0
@@ -107,9 +107,9 @@ func direction_check() -> void:
 
 
 
-func _action_state_update(action_state: PlayerStateMachine.ActionStates) -> void:
+func _action_state_update(action_state: CharacterStateMachine.ActionStates) -> void:
 	if not action_state == currentActionState:
-		if action_state == PlayerStateMachine.ActionStates.HEAVY_ATTACK:
+		if action_state == CharacterStateMachine.ActionStates.SECOND_ATTACK:
 			allowMovement = false
 		else: allowMovement = true
 	
@@ -120,11 +120,11 @@ func _action_state_update(action_state: PlayerStateMachine.ActionStates) -> void
 
 func movement_state_check() -> void:
 	if not velocity and is_on_floor(): # and not currentMovementState == MovementStates.IDLE:
-		currentMovementState = PlayerStateMachine.MovementStates.IDLE
+		currentMovementState = CharacterStateMachine.MovementStates.IDLE
 	elif velocity and is_on_floor(): # and not currentMovementState == MovementStates.RUNNING:
-		currentMovementState = PlayerStateMachine.MovementStates.RUNNING
+		currentMovementState = CharacterStateMachine.MovementStates.MOVING
 	elif not is_on_floor(): # and not currentMovementState == MovementStates.ON_AIR:
-		currentMovementState = PlayerStateMachine.MovementStates.ON_AIR
+		currentMovementState = CharacterStateMachine.MovementStates.ON_AIR
 
 
 
@@ -135,16 +135,16 @@ func action_state_check(delta: float) -> void:
 	if Input.is_action_just_pressed("action"):
 		#print('ACTION')
 		deltaCount[0] = 0.0
-		currentActionState = PlayerStateMachine.ActionStates.ATTACK
+		currentActionState = CharacterStateMachine.ActionStates.ATTACK
 	
 	if Input.is_action_pressed("action"):
 		deltaCount[1] += delta
 		if deltaCount[1] > HEAVY_ATTACK_HOLD_TIME:
 			#print("HEAVY ACTION")
-			currentActionState = PlayerStateMachine.ActionStates.HEAVY_ATTACK
+			currentActionState = CharacterStateMachine.ActionStates.SECOND_ATTACK
 	else: deltaCount[1] = 0.0
 	
 	if deltaCount[0] > ATTACK_SPAM_TIME and not Input.is_action_pressed("action"):
 		#print("NO ACTION")
-		currentActionState = PlayerStateMachine.ActionStates.NULL
+		currentActionState = CharacterStateMachine.ActionStates.NULL
 	

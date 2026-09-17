@@ -27,5 +27,7 @@ debug_enabled = true
 position = Vector2(20, 0)
 target_position = Vector2(0, 40)
 
-[node name="EnemyAnimationState" parent="." index="4" unique_id=1996797651]
-EnemySpriteFrame = ExtResource("2_1rlsf")
+[node name="EnemyAnimationState" parent="." index="4" unique_id=1996797651 node_paths=PackedStringArray("Parent", "AnimSprite")]
+Parent = NodePath("..")
+AnimSprite = NodePath("../AnimatedSprite2D")
+ParentSpriteFrame = ExtResource("2_1rlsf")

@@ -63,3 +63,9 @@ func _on_wall_collide_area_body_entered(_body: Node2D) -> void:
 	await animation_finished
 	visible = false
 	position = LOCAL_START_POS
+
+
+func _on_hit_box_body_entered(body: Node2D) -> void:
+	if body and is_instance_valid(body):
+			if body.has_method("damage"):
+				body.damage(self, 70)

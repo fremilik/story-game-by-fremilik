@@ -78,4 +78,12 @@ position = Vector2(1.7647057, -19.999998)
 scale = Vector2(1.0000002, 1.0000002)
 shape = SubResource("RectangleShape2D_4kxuq")
 
+[node name="HitBox" type="Area2D" parent="." unique_id=430994099]
+collision_layer = 0
+collision_mask = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="HitBox" unique_id=1941951955]
+polygon = PackedVector2Array(-17, -47, -16, 4, 10, 4, 15, -1, 19, -12, 19, -27, 14, -38, 0, -47)
+
 [connection signal="body_entered" from="WallCollideArea" to="." method="_on_wall_collide_area_body_entered"]
+[connection signal="body_entered" from="HitBox" to="." method="_on_hit_box_body_entered"]
