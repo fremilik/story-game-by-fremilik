@@ -39,6 +39,8 @@ var aboutToExitCurrentState: Dictionary[AnimStates, bool] = {
 
 var processStepCall: int
 var currentFrameStrike: int
+var attackCooldownTimer: Timer
+
 
 enum AnimStates {MOVEMENT, ACTION, DISABILITY}
 enum MovementStates {IDLE, MOVING, ON_AIR}
@@ -50,6 +52,10 @@ func _ready() -> void:
 	assert(Parent)
 	assert(AnimSprite)
 	assert(ParentSpriteFrame)
+	
+	attackCooldownTimer = Timer.new()
+	attackCooldownTimer.one_shot = true
+	Parent.add_child.call_deferred(attackCooldownTimer)
 	
 
 

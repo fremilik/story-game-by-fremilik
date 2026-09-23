@@ -63,11 +63,9 @@ texture = SubResource("CanvasTexture_xtl80")
 [node name="Player" parent="." unique_id=1713184507 instance=ExtResource("3_ejll3")]
 position = Vector2(0.48382568, -53.778587)
 scale = Vector2(2, 2)
-SPEED = 270.0
-JUMP_FORCE = 550.0
 
-[node name="Goblin" parent="." unique_id=1619564556 instance=ExtResource("3_scul4")]
-position = Vector2(150, -125)
+[node name="Goblin" parent="." unique_id=432271149 instance=ExtResource("3_scul4")]
+position = Vector2(159, 209)
 
 [node name="Nav Test Map" parent="." unique_id=531054195 instance=ExtResource("4_scul4")]
 z_index = -1

@@ -10,7 +10,7 @@
 radius = 5.0
 height = 21.0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cb0pm"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_dn6k5"]
 size = Vector2(46, 20)
 
 [node name="Player" unique_id=1713184507 instance=ExtResource("1_rrj0j")]
@@ -20,7 +20,9 @@ script = ExtResource("2_83iky")
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1751257796]
 sprite_frames = ExtResource("2_p48cs")
-animation = &"attack"
+animation = &"hurt"
+frame = 3
+frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1423494480]
 shape = SubResource("CapsuleShape2D_83iky")
@@ -50,11 +52,9 @@ hit_from_inside = true
 unique_name_in_owner = true
 visible = false
 
-[node name="HitBox" type="Area2D" parent="." index="6" unique_id=1765866380]
-unique_name_in_owner = true
-collision_layer = 0
+[node name="HitBox" parent="." index="6" unique_id=417129226]
 collision_mask = 4
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" index="0" unique_id=1296887632]
+[node name="CollisionShape2D" parent="HitBox" index="0" unique_id=1203632002]
 position = Vector2(23, 0)
-shape = SubResource("RectangleShape2D_cb0pm")
+shape = SubResource("RectangleShape2D_dn6k5")

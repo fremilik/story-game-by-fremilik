@@ -13,8 +13,9 @@ path_desired_distance = 40.0
 target_desired_distance = 30.0
 navigation_layers = 3
 
-[node name="OffPlatformCast" type="RayCast2D" parent="." index="3" unique_id=830583449]
+[node name="OffPlatformCast" type="RayCast2D" parent="." index="3" unique_id=830583449 groups=["Flippable Nodes"]]
 unique_name_in_owner = true
 
 [node name="EnemyAnimationState" type="Node" parent="." index="4" unique_id=1996797651]
+unique_name_in_owner = true
 script = ExtResource("3_ryivv")

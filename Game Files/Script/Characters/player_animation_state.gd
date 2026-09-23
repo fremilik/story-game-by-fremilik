@@ -12,11 +12,20 @@ func _enter_state_anim_logic(anim_state: AnimStates, state: int) -> void:
 				AnimSprite.play("on_air")
 	elif anim_state == AnimStates.ACTION:
 		match state:
-			ActionStates.NULL:
+			ActionStates.NULL: # MANDATORY
 				enter_state(AnimStates.MOVEMENT, newState[AnimStates.MOVEMENT])
 			ActionStates.ATTACK:
 				currentFrameStrike = 0
 				AnimSprite.play("attack")
+	elif anim_state == AnimStates.DISABILITY:
+		match state:
+			DisabilityStates.NULL: # MANDATORY
+				Parent.currentDisabilityState = DisabilityStates.NULL
+				enter_state(AnimStates.MOVEMENT, newState[AnimStates.MOVEMENT])
+			DisabilityStates.DEAD:
+				AnimSprite.play("death")
+
+
 
 
 func _process_state_anim_logic(anim_state: AnimStates, state: int) -> void:
@@ -38,6 +47,17 @@ func _process_state_anim_logic(anim_state: AnimStates, state: int) -> void:
 					#print("PAUSE FRAME")
 					AnimSprite.pause()
 					processStepCall += 1
+	
+	elif anim_state == AnimStates.DISABILITY:
+		match state:
+			DisabilityStates.HURT:
+				if processStepCall == 0:
+					AnimSprite.play("hurt")
+					processStepCall += 1
+				elif not AnimSprite.is_playing() and processStepCall == 1:
+					processStepCall += 1
+					newState[AnimStates.DISABILITY] = DisabilityStates.NULL
+					exit_state(AnimStates.DISABILITY)
 
 
 

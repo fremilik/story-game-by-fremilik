@@ -1,60 +1,41 @@
-extends CharacterBody2D
+extends CharacterBase
 class_name AbstractEnemy
 
-@onready var AnimSprite: AnimatedSprite2D = $AnimatedSprite2D
 @onready var NavAgent: NavigationAgent2D = $NavigationAgent2D
 @onready var EnemyAnimState: Node = $EnemyAnimationState
 
 @export var EnemyName: StringName
 
-enum Directions {LEFT = -1, RIGHT = 1}
-
-var JUMP_FORCE: float = 605
-
-var offsetNodePos := {
-	"off_platform_cast": 20
-}
-
-var initDirection: float
-var direction: float
-
-var speed: float = 240
-var healthPoint: float = 100
+const ATTACK_DELAY: float = 1.5
 
 var nextPathPos: Vector2
 var isNavigationOngoing: bool = false
 var handleLinkReached: bool = false
 var navLinkDetails: Dictionary
 
+var attackStrike: bool = false
 
-var currentMovementState: CharacterStateMachine.MovementStates
-var currentActionState: CharacterStateMachine.ActionStates
-var currentDisabilityState: CharacterStateMachine.DisabilityStates
-
-
-func _init() -> void:
-	await ready
-	_ready_setup()
-	
-
-
-func _ready_setup() -> void:
+func _setup() -> void:
 	assert(EnemyName)
-	print("READY")
+	
+	AnimSprite = %AnimatedSprite2D
+	HitBoxArea = %HitBox
+	AnimState = %EnemyAnimationState
+	OppCollisionMask = 2
+	
+	JUMP_FORCE = 605
+	SPEED = 240
+	
 	NavAgent.target_reached.connect(_on_target_pos_reached)
 	NavAgent.navigation_finished.connect(_on_navigation_finished)
 	NavAgent.link_reached.connect(_on_link_reached)
 	
-
-
-
-func _process(_delta: float) -> void:
-	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD: return
+	allowMovement = func() -> bool:
+		return (currentDisabilityState == CharacterStateMachine.DisabilityStates.NULL and
+		 not currentActionState == CharacterStateMachine.ActionStates.ATTACK)
 	
-	movement_state_check()
-	if not currentMovementState == CharacterStateMachine.MovementStates.IDLE:
-		direction_check(direction)
-	
+
+
 
 
 var deltaCount: float
@@ -64,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	if not is_on_floor():
 		velocity.y += Global.GRAVITY
 	
-	if isNavigationOngoing:
+	if isNavigationOngoing and allowMovement.call():
 		if handleLinkReached:
 			velocity.x = 0
 			
@@ -86,7 +67,7 @@ func _physics_process(delta: float) -> void:
 				print("nextPathPos: %s" % nextPathPos)
 				direction = signf(nextPathPos.x - global_position.x)
 			
-			velocity.x = direction * speed
+			velocity.x = direction * SPEED
 	else: velocity.x = 0
 	
 	move_and_slide()
@@ -126,43 +107,27 @@ func _on_link_reached(details: Dictionary) -> void:
 
 #endregion
 
-
-func movement_state_check() -> void:
-	if not velocity and is_on_floor():
-		currentMovementState = CharacterStateMachine.MovementStates.IDLE
-	elif velocity and is_on_floor():
-		currentMovementState = CharacterStateMachine.MovementStates.MOVING
-	elif not is_on_floor():
-		currentMovementState = CharacterStateMachine.MovementStates.ON_AIR
-
-
-func direction_check(look_at_direc: float) -> void:
-	if not initDirection == look_at_direc and look_at_direc:
-		initDirection = look_at_direc
-		
-		match int(look_at_direc):
-			Directions.LEFT:
-				AnimSprite.flip_h = true
-				%OffPlatformCast.position.x = -1 * offsetNodePos["off_platform_cast"]
-				#HitBoxCol.position.x = -30
-			Directions.RIGHT:
-				AnimSprite.flip_h = false
-				%OffPlatformCast.position.x = offsetNodePos["off_platform_cast"]
-				#HitBoxCol.position.x = 30
-		
+#func handle_bodies_in_hit_box(body: Node2D, action: String) -> void:
+	#if action == "entered":
+		#print("BODY ENTERED")
+		#bodiesInHitBox.append(body)
+		##allowMovement = false
+		#currentActionState = CharacterStateMachine.ActionStates.ATTACK
+	#elif action == "exited":
+		#print("BODY EXITED")
+		#bodiesInHitBox.erase(body)
+		##allowMovement = true
+		#currentActionState = CharacterStateMachine.ActionStates.NULL
 
 
-func damage(body: Node2D, value: float) -> void:
-	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD: return
-	print("HURT")
-	direction_check(signf(body.global_position.x - global_position.x))
-	healthPoint -= value
-	currentDisabilityState = CharacterStateMachine.DisabilityStates.HURT
-	EnemyAnimState.apply_disable_state(CharacterStateMachine.DisabilityStates.HURT)
-	
-	
-	if healthPoint <= 0:
-		print("DEAD")
-		currentDisabilityState = CharacterStateMachine.DisabilityStates.DEAD
-		EnemyAnimState.apply_disable_state(CharacterStateMachine.DisabilityStates.DEAD)
+var attackTimeCount: Array[float] = [0.0, 0.0]
+func action_state_check(delta: float) -> void:
+	if not bodiesInHitBox.is_empty():
+		if currentActionState == CharacterStateMachine.ActionStates.NULL:
+			attackTimeCount[0] += delta
+			if attackTimeCount[0] > ATTACK_DELAY:
+				currentActionState = CharacterStateMachine.ActionStates.ATTACK
+				attackTimeCount[0] = 0.0
+	else:
+		currentActionState = CharacterStateMachine.ActionStates.NULL
 	

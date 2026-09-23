@@ -5,7 +5,10 @@
 [ext_resource type="Script" uid="uid://d12jur210ii2o" path="res://Script/Characters/Basic Enemy/goblin_enemy.gd" id="2_o2c8s"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_anr54"]
-height = 40.0
+height = 37.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ryivv"]
+size = Vector2(50, 35)
 
 [node name="Goblin" unique_id=1713184507 instance=ExtResource("1_ratqe")]
 scale = Vector2(1.2, 1.2)
@@ -14,7 +17,8 @@ EnemyName = &"Goblin"
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1751257796]
 sprite_frames = ExtResource("2_1rlsf")
-animation = &"hurt"
+animation = &"attack"
+frame = 6
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1423494480]
 position = Vector2(1, 7)
@@ -31,3 +35,10 @@ target_position = Vector2(0, 40)
 Parent = NodePath("..")
 AnimSprite = NodePath("../AnimatedSprite2D")
 ParentSpriteFrame = ExtResource("2_1rlsf")
+AttackStrikeFrame = Dictionary[int, Variant]({
+1: 6
+})
+
+[node name="CollisionShape2D" parent="HitBox" parent_id_path=PackedInt32Array(417129226) index="0" unique_id=1203632002]
+position = Vector2(26, 7)
+shape = SubResource("RectangleShape2D_ryivv")

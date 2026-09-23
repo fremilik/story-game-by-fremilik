@@ -1,6 +1,7 @@
 extends AnimatedSprite2D
 
 @onready var WallCollider: CollisionShape2D = $WallCollideArea/CollisionShape2D
+@onready var HitBoxCollider: CollisionPolygon2D = $HitBox/CollisionPolygon2D
 
 const LOCAL_START_POS := Vector2(28, 2)
 const FINAL_ANIM_SCALE := Vector2(1.7, 1.7)
@@ -13,10 +14,17 @@ var direction: int
 var initActivatePos: Vector2
 var processProjection: bool
 
+
 func _ready() -> void:
 	visible = false
 	processProjection = false
 	position = LOCAL_START_POS
+	
+	HitBoxCollider.set_deferred("disabled", true)
+	
+	
+
+
 
 
 func activate(dir: int) -> void:
@@ -26,6 +34,7 @@ func activate(dir: int) -> void:
 	direction = dir
 	initActivatePos = global_position
 	WallCollider.set_deferred("disabled", false)
+	HitBoxCollider.set_deferred("disabled", false)
 	stop()
 	
 	if direction == 1:
@@ -50,15 +59,19 @@ func _process(delta: float) -> void:
 			print("RESET WAVE")
 			visible = false
 			WallCollider.set_deferred("disabled", true)
+			HitBoxCollider.set_deferred("disabled", true)
 			position = LOCAL_START_POS
 			processProjection = false
 		
+
+
 
 
 func _on_wall_collide_area_body_entered(_body: Node2D) -> void:
 	print("WALL COLLIDE")
 	processProjection = false
 	WallCollider.set_deferred("disabled", true)
+	HitBoxCollider.set_deferred("disabled", true)
 	play("destroy")
 	await animation_finished
 	visible = false
