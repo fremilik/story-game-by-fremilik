@@ -1,6 +1,6 @@
 extends CharacterBase
 
-const ATTACK_SPAM_TIME: float = 0.4
+const ATTACK_SPAM_TIME: float = 0.35
 const HEAVY_ATTACK_HOLD_TIME: float = 0.25
 
 var attackTimeCount: Array[float] = [0.0, 0.0]
@@ -15,6 +15,9 @@ func _setup() -> void:
 	allowMovement = func() -> bool:
 		return (currentDisabilityState == CharacterStateMachine.DisabilityStates.NULL and
 		 not currentActionState == CharacterStateMachine.ActionStates.SECOND_ATTACK)
+	
+	allowAttack = func() -> bool:
+		return (currentDisabilityState == CharacterStateMachine.DisabilityStates.NULL)
 	
 
 
@@ -46,8 +49,11 @@ func _physics_process(_delta: float) -> void:
 
 
 func action_state_check(delta: float) -> void:
-	attackTimeCount[0] += delta
+	if not allowAttack.call():
+		currentActionState = CharacterStateMachine.ActionStates.NULL
+		return
 	
+	attackTimeCount[0] += delta
 	if Input.is_action_just_pressed("action"):
 		#print('ACTION')
 		attackTimeCount[0] = 0.0

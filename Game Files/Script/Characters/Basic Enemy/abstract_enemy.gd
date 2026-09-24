@@ -3,10 +3,11 @@ class_name AbstractEnemy
 
 @onready var NavAgent: NavigationAgent2D = $NavigationAgent2D
 @onready var EnemyAnimState: Node = $EnemyAnimationState
+@onready var DetectArea: Area2D = $DetectArea
 
 @export var EnemyName: StringName
 
-const ATTACK_DELAY: float = 1.5
+const ATTACK_DELAY: float = 2.0
 
 var nextPathPos: Vector2
 var isNavigationOngoing: bool = false
@@ -15,26 +16,36 @@ var navLinkDetails: Dictionary
 
 var attackStrike: bool = false
 
+
 func _setup() -> void:
 	assert(EnemyName)
 	
 	AnimSprite = %AnimatedSprite2D
 	HitBoxArea = %HitBox
 	AnimState = %EnemyAnimationState
+	
+	
 	OppCollisionMask = 2
 	
 	JUMP_FORCE = 605
 	SPEED = 240
 	
+	DetectArea.set_collision_mask_value(OppCollisionMask, true)
+	DetectArea.body_entered.connect(_on_action_on_detect_area.bind(&"entered"))
+	DetectArea.body_exited.connect(_on_action_on_detect_area.bind(&"exited"))
+	
 	NavAgent.target_reached.connect(_on_target_pos_reached)
 	NavAgent.navigation_finished.connect(_on_navigation_finished)
 	NavAgent.link_reached.connect(_on_link_reached)
+	
 	
 	allowMovement = func() -> bool:
 		return (currentDisabilityState == CharacterStateMachine.DisabilityStates.NULL and
 		 not currentActionState == CharacterStateMachine.ActionStates.ATTACK)
 	
-
+	allowAttack = func() -> bool:
+		return (currentDisabilityState == CharacterStateMachine.DisabilityStates.NULL)
+	
 
 
 
@@ -52,7 +63,6 @@ func _physics_process(delta: float) -> void:
 			var entryPos: Vector2 = navLinkDetails["link_entry_position"]
 			var exitPos: Vector2 = navLinkDetails["link_exit_position"]
 			var linkDirection: Vector2 = entryPos.direction_to(exitPos)
-			
 			
 			if Vector2.UP.dot(linkDirection) > 0.0:#or not %OffPlatformCast.is_colliding():
 				velocity.y = -1 * JUMP_FORCE
@@ -77,7 +87,7 @@ func _physics_process(delta: float) -> void:
 func _input(_event: InputEvent) -> void:
 	if Input.is_action_just_pressed("debug_1"):
 		_set_nav_target_pos(Global.PlayerPos)
-		
+	
 
 
 func _set_nav_target_pos(target_pos: Vector2) -> void:
@@ -86,6 +96,41 @@ func _set_nav_target_pos(target_pos: Vector2) -> void:
 	
 	print("target_pos: %s" % target_pos)
 	print(NavAgent.get_next_path_position())
+	
+
+
+var attackTimeCount: Array[float] = [0.0, 0.0]
+func action_state_check(delta: float) -> void:
+	if not allowAttack.call():
+		currentActionState = CharacterStateMachine.ActionStates.NULL
+		return
+	
+	if not bodiesInHitBox.is_empty():
+		if currentActionState == CharacterStateMachine.ActionStates.NULL:
+			attackTimeCount[0] += delta
+			if attackTimeCount[0] > ATTACK_DELAY:
+				currentActionState = CharacterStateMachine.ActionStates.ATTACK
+				attackTimeCount[0] = 0.0
+	else:
+		currentActionState = CharacterStateMachine.ActionStates.NULL
+	
+
+
+
+func _on_action_on_detect_area(_body: Node2D, action: StringName) -> void:
+	if action == &"entered":
+		print("DETECT ENTER")
+	elif action == &"exited":
+		print("DETECT EXIT")
+	
+
+
+
+func _on_action_on_escape_area(_body: Node2D, action: StringName) -> void:
+	if action == &"entered":
+		pass
+	elif action == &"exited":
+		pass
 	
 
 
@@ -106,28 +151,3 @@ func _on_link_reached(details: Dictionary) -> void:
 	navLinkDetails = details
 
 #endregion
-
-#func handle_bodies_in_hit_box(body: Node2D, action: String) -> void:
-	#if action == "entered":
-		#print("BODY ENTERED")
-		#bodiesInHitBox.append(body)
-		##allowMovement = false
-		#currentActionState = CharacterStateMachine.ActionStates.ATTACK
-	#elif action == "exited":
-		#print("BODY EXITED")
-		#bodiesInHitBox.erase(body)
-		##allowMovement = true
-		#currentActionState = CharacterStateMachine.ActionStates.NULL
-
-
-var attackTimeCount: Array[float] = [0.0, 0.0]
-func action_state_check(delta: float) -> void:
-	if not bodiesInHitBox.is_empty():
-		if currentActionState == CharacterStateMachine.ActionStates.NULL:
-			attackTimeCount[0] += delta
-			if attackTimeCount[0] > ATTACK_DELAY:
-				currentActionState = CharacterStateMachine.ActionStates.ATTACK
-				attackTimeCount[0] = 0.0
-	else:
-		currentActionState = CharacterStateMachine.ActionStates.NULL
-	

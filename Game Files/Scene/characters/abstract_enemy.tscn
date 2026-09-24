@@ -19,3 +19,13 @@ unique_name_in_owner = true
 [node name="EnemyAnimationState" type="Node" parent="." index="4" unique_id=1996797651]
 unique_name_in_owner = true
 script = ExtResource("3_ryivv")
+
+[node name="DetectArea" type="Area2D" parent="." index="6" unique_id=570927174]
+collision_layer = 0
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectArea" index="0" unique_id=1167892078]
+
+[node name="EscapeArea" type="Area2D" parent="." index="7" unique_id=1493900256]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="EscapeArea" index="0" unique_id=1300069178]

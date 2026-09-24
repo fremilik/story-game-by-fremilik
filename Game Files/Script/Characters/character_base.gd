@@ -1,6 +1,8 @@
 extends CharacterBody2D
 class_name CharacterBase
 
+@export var DevOvr_Health: bool
+
 enum Directions {LEFT = -1, RIGHT = 1}
 
 var AnimSprite: AnimatedSprite2D
@@ -23,7 +25,7 @@ var currentDisabilityState: CharacterStateMachine.DisabilityStates
 var bodiesInHitBox: Array[Node2D]
 
 var allowMovement: Callable = func() -> bool: return true
-
+var allowAttack: Callable = func() -> bool: return true
 
 func _ready() -> void:
 	_setup()
@@ -59,7 +61,7 @@ func damage_bodies_in_hit_box() -> void:
 	for body in bodiesInHitBox:
 		if body and is_instance_valid(body):
 			if body.has_method("damage"):
-				body.damage(self, 20)
+				body.damage(self, 10)
 	
 
 
@@ -75,7 +77,8 @@ func handle_bodies_in_hit_box(body: Node2D, action: String) -> void:
 
 
 func damage(body: Node2D, value: float) -> void:
-	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD: return
+	print("devovr_health: %s" % DevOvr_Health)
+	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD or DevOvr_Health: return
 	print("HURT")
 	direction_check(signf(body.global_position.x - global_position.x))
 	healthPoint -= value

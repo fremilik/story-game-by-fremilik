@@ -1,3 +1,4 @@
 *.import
 .godot/
 *.uid
+Game Files/test_world.tscn
