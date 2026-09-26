@@ -4,7 +4,7 @@
 [ext_resource type="Script" uid="uid://dbtnodjkf20a6" path="res://Script/Characters/Basic Enemy/abstract_enemy.gd" id="2_amopv"]
 [ext_resource type="Script" uid="uid://ddjvf64felp7u" path="res://Scene/characters/enemy_animation_state.gd" id="3_ryivv"]
 
-[node name="CharacterBody2D" unique_id=1713184507 instance=ExtResource("1_t2l6h")]
+[node name="CharacterBody2D" unique_id=1713184507 groups=["Enemy"] instance=ExtResource("1_t2l6h")]
 collision_layer = 4
 script = ExtResource("2_amopv")
 

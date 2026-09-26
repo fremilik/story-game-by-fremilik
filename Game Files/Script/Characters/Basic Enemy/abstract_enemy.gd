@@ -16,6 +16,10 @@ var navLinkDetails: Dictionary
 
 var attackStrike: bool = false
 
+var isPlayerDetected: bool = false
+
+var currentBehaviorState: EnemyBehavior.BehaviorStates
+
 
 func _setup() -> void:
 	assert(EnemyName)
@@ -46,6 +50,8 @@ func _setup() -> void:
 	allowAttack = func() -> bool:
 		return (currentDisabilityState == CharacterStateMachine.DisabilityStates.NULL)
 	
+
+
 
 
 
@@ -105,6 +111,7 @@ func action_state_check(delta: float) -> void:
 		currentActionState = CharacterStateMachine.ActionStates.NULL
 		return
 	
+	
 	if not bodiesInHitBox.is_empty():
 		if currentActionState == CharacterStateMachine.ActionStates.NULL:
 			attackTimeCount[0] += delta
@@ -119,7 +126,7 @@ func action_state_check(delta: float) -> void:
 
 func _on_action_on_detect_area(_body: Node2D, action: StringName) -> void:
 	if action == &"entered":
-		print("DETECT ENTER")
+		isPlayerDetected = true
 	elif action == &"exited":
 		print("DETECT EXIT")
 	
@@ -130,7 +137,7 @@ func _on_action_on_escape_area(_body: Node2D, action: StringName) -> void:
 	if action == &"entered":
 		pass
 	elif action == &"exited":
-		pass
+		isPlayerDetected = false
 	
 
 
@@ -149,5 +156,4 @@ func _on_link_reached(details: Dictionary) -> void:
 	print("LINKED REACHED")
 	handleLinkReached = true
 	navLinkDetails = details
-
 #endregion

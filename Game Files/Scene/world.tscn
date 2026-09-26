@@ -5,6 +5,7 @@
 [ext_resource type="PackedScene" uid="uid://cxml2t1y73ygh" path="res://Scene/characters/player.tscn" id="3_ejll3"]
 [ext_resource type="PackedScene" uid="uid://d2ilxsd3ytlon" path="res://Scene/characters/goblin_enemy.tscn" id="3_scul4"]
 [ext_resource type="PackedScene" uid="uid://bb5jnnqsb0v2u" path="res://Scene/Nav Test Map.tscn" id="4_scul4"]
+[ext_resource type="Script" uid="uid://dek48kpx0whk7" path="res://Script/Characters/Basic Enemy/enemy_behavior_server.gd" id="6_37axr"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_emx41"]
 size = Vector2(2000, 20)
@@ -72,3 +73,6 @@ z_index = -1
 position = Vector2(-37, -225)
 
 [node name="MapNavLinks" type="Node2D" parent="." unique_id=1287958195]
+
+[node name="EnemyBehaviorServer" type="Node" parent="." unique_id=1611623786]
+script = ExtResource("6_37axr")
