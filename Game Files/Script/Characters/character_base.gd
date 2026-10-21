@@ -1,7 +1,7 @@
 extends CharacterBody2D
 class_name CharacterBase
 
-@export var DevOvr_Health: bool
+@export var Ovr_Damage: bool
 
 enum Directions {LEFT = -1, RIGHT = 1}
 
@@ -77,8 +77,8 @@ func handle_bodies_in_hit_box(body: Node2D, action: String) -> void:
 
 
 func damage(body: Node2D, value: float) -> void:
-	print("devovr_health: %s" % DevOvr_Health)
-	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD or DevOvr_Health: return
+	print("devovr_health: %s" % Ovr_Damage)
+	if currentDisabilityState == CharacterStateMachine.DisabilityStates.DEAD or Ovr_Damage: return
 	print("HURT")
 	direction_check(signf(body.global_position.x - global_position.x))
 	healthPoint -= value

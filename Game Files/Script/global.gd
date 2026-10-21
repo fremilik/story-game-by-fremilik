@@ -5,7 +5,7 @@ const GRAVITY: float = 25.0
 #const JUMP_FORCE: float = 560
 
 var PlayerPos: Vector2
-
+var NavMapRid: RID
 
 
 func get_running_time() -> float:

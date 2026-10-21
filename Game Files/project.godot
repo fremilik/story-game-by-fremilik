@@ -22,6 +22,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 Global="*uid://reu5d114r8fi"
+EnemyServer="*uid://dek48kpx0whk7"
 
 [display]
 
@@ -90,5 +91,4 @@ debug_2={
 
 [rendering]
 
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method="mobile"

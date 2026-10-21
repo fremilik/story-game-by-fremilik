@@ -9,9 +9,9 @@ collision_layer = 4
 script = ExtResource("2_amopv")
 
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." index="2" unique_id=1503703087]
-path_desired_distance = 40.0
-target_desired_distance = 30.0
-navigation_layers = 3
+path_desired_distance = 30.0
+target_desired_distance = 40.0
+path_max_distance = 150.0
 
 [node name="OffPlatformCast" type="RayCast2D" parent="." index="3" unique_id=830583449 groups=["Flippable Nodes"]]
 unique_name_in_owner = true

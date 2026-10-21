@@ -16,7 +16,7 @@ func _ready() -> void:
 		if NavTestMap.has_node("PlatformNavLayer"):
 			PlatformNavMap = NavTestMap.get_node("PlatformNavLayer")
 			PlatformNavMap.tile_set = load("res://Resources/test_map_tileset.tres")
-			
+			Global.NavMapRid = PlatformNavMap.get_navigation_map()
 			_set_nav_links_at_proximity(PlatformNavMap.get_used_cells_by_id(1, Vector2i(0, 1)))
 		else: print("COULD NOT FIND NODE")
 		

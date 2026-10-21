@@ -2,3 +2,4 @@
 .godot/
 *.uid
 Game Files/test_world.tscn
+/Game Files/non game
