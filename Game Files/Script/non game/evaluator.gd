@@ -1,13 +1,5 @@
 @tool extends EditorScript
 
-var a_text: String = "Hello"
-var a_text2: String = " World"
-var a_number: int
-var a_float: float
-var a_bool: bool
-
-var an_array: Array = [20, 40, 50]
-var a_dictionary: Dictionary = {1: "fahad", 2: "usman", 3: "john"}
 
 
 func _run() -> void:

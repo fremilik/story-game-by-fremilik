@@ -43,8 +43,9 @@ var attackCooldownTimer: Timer
 
 
 enum AnimStates {MOVEMENT, ACTION, DISABILITY}
+
 enum MovementStates {IDLE, MOVING, ON_AIR}
-enum ActionStates {NULL, ATTACK, SECOND_ATTACK, PROJECTILE_ATTACK}
+enum ActionStates {NULL, ATTACK, SECOND_ATTACK, PROJECTILE_ATTACK, ALERT}
 enum DisabilityStates {NULL, HURT, DEAD}
 
 

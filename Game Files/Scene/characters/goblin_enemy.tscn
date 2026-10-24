@@ -8,23 +8,28 @@
 height = 37.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ryivv"]
-size = Vector2(50, 35)
+size = Vector2(35, 35)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_miuk7"]
-size = Vector2(500, 50)
+size = Vector2(400, 50)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_epxjs"]
-size = Vector2(1000, 200)
+size = Vector2(800, 250)
 
 [node name="Goblin" unique_id=1713184507 instance=ExtResource("1_ratqe")]
 scale = Vector2(1.2, 1.2)
 script = ExtResource("2_o2c8s")
 EnemyName = &"Goblin"
+animFpsState = Dictionary[StringName, float]({
+&"behavior_chase": 12.0,
+&"behavior_idle": 7.0
+})
 
 [node name="AnimatedSprite2D" parent="." index="0" unique_id=1751257796]
 sprite_frames = ExtResource("2_1rlsf")
 animation = &"attack"
-frame = 6
+frame = 9
+frame_progress = 1.0
 
 [node name="CollisionShape2D" parent="." index="1" unique_id=1423494480]
 position = Vector2(1, 7)
@@ -46,15 +51,19 @@ AttackStrikeFrame = Dictionary[int, Variant]({
 })
 
 [node name="CollisionShape2D" parent="HitBox" parent_id_path=PackedInt32Array(417129226) index="0" unique_id=1203632002]
-position = Vector2(26, 7)
+position = Vector2(18, 7)
 shape = SubResource("RectangleShape2D_ryivv")
 
 [node name="DetectArea" parent="." index="6" unique_id=570927174]
 unique_name_in_owner = true
+visible = false
 
 [node name="CollisionShape2D" parent="DetectArea" index="0" unique_id=1167892078]
 position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_miuk7")
 
-[node name="CollisionShape2D" parent="EscapeArea" parent_id_path=PackedInt32Array(1493900256) index="0" unique_id=1300069178]
+[node name="EscapeArea" parent="." index="7" unique_id=1493900256]
+visible = false
+
+[node name="CollisionShape2D" parent="EscapeArea" index="0" unique_id=1300069178]
 shape = SubResource("RectangleShape2D_epxjs")

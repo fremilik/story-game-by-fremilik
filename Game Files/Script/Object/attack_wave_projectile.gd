@@ -22,9 +22,6 @@ func _ready() -> void:
 	
 	HitBoxCollider.set_deferred("disabled", true)
 	
-	
-
-
 
 
 func activate(dir: int) -> void:

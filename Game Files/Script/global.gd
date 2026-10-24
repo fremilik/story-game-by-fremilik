@@ -4,6 +4,7 @@ extends Node
 const GRAVITY: float = 25.0
 #const JUMP_FORCE: float = 560
 
+var Player: CharacterBase
 var PlayerPos: Vector2
 var NavMapRid: RID
 

@@ -94,6 +94,7 @@ func damage(body: Node2D, value: float) -> void:
 
 
 
+
 func action_state_check(_delta: float) -> void:
 	pass
 

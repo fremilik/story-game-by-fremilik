@@ -7,6 +7,7 @@ var attackTimeCount: Array[float] = [0.0, 0.0]
 
 
 func _setup() -> void:
+	Global.Player = self
 	AnimState = %PlayerAnimationState
 	HitBoxArea = %HitBox
 	AnimSprite = %AnimatedSprite2D
